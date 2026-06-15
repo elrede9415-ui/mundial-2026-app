@@ -1,20 +1,12 @@
-Mundial 2026 Control Monterrey - App Web v4
+Mundial 2026 Control Monterrey - v6
 
-Cómo usar:
-1. Abre index.html en Chrome o sube la carpeta completa a GitHub Pages.
-2. En Partidos captura goles en G y penales en P si aplica.
-3. Usa los filtros: pendientes, jugados, vencidos, México y favoritos.
-4. Marca favoritos tocando la estrella junto al equipo.
-5. Toca cualquier equipo para ver su resumen.
-6. En Inicio verás el próximo pendiente y partidos vencidos sin resultado.
-7. Exporta tu progreso para guardar respaldo.
+Cambios principales:
+- Enlaces ViX directos por partido cuando están disponibles.
+- Botón "Ver en ViX" y botón "Buscar resultado" en Google.
+- Buscador mejorado: ignora mayúsculas, minúsculas y acentos.
+- Acepta alias/abreviaciones de países: MEX, USA, EEUU, KOR, BRA, etc.
+- Sugerencias tipo "¿Quisiste decir...?" si escribes parecido.
+- Botones de respaldo renombrados a Descargar/Cargar progreso.
 
-Para instalar como app con icono:
-- Sube todos los archivos a GitHub Pages o Netlify.
-- Abre la URL HTTPS en Chrome Android.
-- Menú de Chrome -> Instalar app o Agregar a pantalla principal.
-
-Recordatorios:
-- La app muestra partidos vencidos sin resultado al abrirla.
-- Puede pedir permiso para avisos mientras la app está abierta.
-- Las notificaciones cerrada la app no son tan confiables como una APK nativa.
+Para GitHub Pages, sube el contenido de esta carpeta a la raíz del repositorio:
+index.html, manifest.webmanifest, service-worker.js, README.txt y la carpeta icons.
