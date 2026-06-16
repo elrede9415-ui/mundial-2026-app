@@ -1,4 +1,4 @@
-Mundial 2026 Control Monterrey - v6
+Mundial 2026 Control Monterrey - v7
 
 Cambios principales:
 - Enlaces ViX directos por partido cuando están disponibles.

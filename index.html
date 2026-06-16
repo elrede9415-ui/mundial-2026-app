@@ -142,6 +142,22 @@ const VIX_LINKS = {
   "78": "https://vix.com/es-es/live/transmission-matchid-2608318",
   "79": "https://vix.com/es-es/live/transmission-matchid-2608319"
 };
+const VIX_SUMMARY_LINKS = {
+  "1": "https://vix.com/es-es/video/video-4904685",
+  "2": "https://vix.com/es-es/video/video-4905033",
+  "3": "https://vix.com/es-es/video/video-4905558",
+  "4": "https://vix.com/es-es/video/video-4905870",
+  "5": "https://vix.com/es-es/video/video-4906173",
+  "6": "https://vix.com/es-es/video/video-4906233",
+  "7": "https://vix.com/es-es/video/video-4906098",
+  "8": "https://vix.com/es-es/video/video-4906038",
+  "9": "https://vix.com/es-es/video/video-4906489",
+  "10": "https://vix.com/es-es/video/video-4906330",
+  "11": "https://vix.com/es-es/video/video-4906381",
+  "12": "https://vix.com/es-es/video/video-4906570",
+  "14": "https://vix.com/es-es/video/video-4906824",
+  "16": "https://vix.com/es-es/video/video-4906985"
+};
 const tabs = [
   ['home','Inicio'], ['matches','Partidos'], ['groups','Grupos'], ['thirds','Mejores 3º'], ['bracket','Llave'], ['team','Selección'], ['help','Instrucciones']
 ];
@@ -195,26 +211,40 @@ function overdueMatches(){ return MATCHES.filter(isOverdue); }
 function statusLabel(m){ if(hasResult(m)) return ['Jugado','green']; if(isOverdue(m)) return ['Falta resultado','red']; return ['Pendiente','blue']; }
 function openTeam(team){ localStorage.setItem('selectedTeam', team); showTab('team'); }
 function resetMatch(id){ if(confirm('¿Borrar el marcador y nota de este partido?')){ delete state[String(id)]; saveState(); renderAll(); } }
-function vixLink(id){ return VIX_LINKS[String(id)] || ''; }
+const VIX_LIVE_START_MINUTES = 90;
+const VIX_LIVE_END_MINUTES = 150;
+function vixLiveLink(id){ return VIX_LINKS[String(id)] || ''; }
+function vixSummaryLink(id){ return VIX_SUMMARY_LINKS[String(id)] || ''; }
+function vixStatusForMatch(m){
+  if(!m) return 'none';
+  const start = getDateTime(m.fecha, m.hora);
+  const now = new Date();
+  const liveStart = new Date(start.getTime() - VIX_LIVE_START_MINUTES * 60000);
+  const liveEnd = new Date(start.getTime() + VIX_LIVE_END_MINUTES * 60000);
+  if(now >= liveStart && now <= liveEnd) return 'live';
+  if(now > liveEnd) return 'summary';
+  return 'future';
+}
 function vixButton(id){
-  const link = vixLink(id);
-  return link ? `<button class="vix-btn" onclick="openVixMatch(event, ${id})">📺 Ver en ViX</button>` : '';
+  const m = matchById(id);
+  const status = vixStatusForMatch(m);
+  const live = vixLiveLink(id);
+  const summary = vixSummaryLink(id);
+  if(status === 'live' && live) return `<button class="vix-btn" onclick="openVixMatch(event, ${id}, 'live')">📺 Ver en ViX</button>`;
+  if(status === 'summary' && summary) return `<button class="vix-btn" onclick="openVixMatch(event, ${id}, 'summary')">🎬 Ver resumen en ViX</button>`;
+  return '';
 }
-function homeVixButton(id){
-  const link = vixLink(id);
-  return link ? `<button class="vix-btn" onclick="openVixMatch(event, ${id})">📺 Ver en ViX</button>` : '';
-}
-function openVixMatch(ev, id){
+function homeVixButton(id){ return vixButton(id); }
+function openVixMatch(ev, id, kind){
   if(ev) ev.stopPropagation();
-  const link = vixLink(id);
+  const link = kind === 'summary' ? vixSummaryLink(id) : vixLiveLink(id);
   if(link) window.open(link, '_blank', 'noopener');
-  else searchResultForMatch(ev, id);
 }
 function searchResultForMatch(ev, id){
   if(ev) ev.stopPropagation();
   const m = matchById(id); if(!m) return;
   const [t1,t2] = getMatchTeams(m, new Set());
-  const query = `${t1} vs ${t2} Mundial 2026 resultado marcador goles`;
+  const query = `${t1} vs ${t2} Mundial 2026 resultado marcador goles resumen`;
   window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank', 'noopener');
 }
 function searchVixForMatch(ev, id){ searchResultForMatch(ev, id); }
@@ -270,6 +300,11 @@ const SEARCH_ALIASES = {
   'rd congo':'rd congo','dr congo':'rd congo','congo':'rd congo','republica democratica del congo':'rd congo','república democrática del congo':'rd congo','cod':'rd congo','drc':'rd congo',
   'uzbekistan':'uzbekistan','uzbekistán':'uzbekistan','uzb':'uzbekistan',
   'colombia':'colombia','col':'colombia'
+  , 'mty':'monterrey','mt y':'monterrey','monterrey':'monterrey','guadalupe':'guadalupe monterrey','guadalupe nl':'guadalupe monterrey','nuevo leon':'monterrey','nuevo león':'monterrey','nl':'monterrey','bbva':'monterrey','estadio bbva':'monterrey','estadio monterrey':'monterrey'
+  , 'gdl':'guadalajara','guadalajara':'guadalajara','zapopan':'guadalajara','jalisco':'guadalajara'
+  , 'cdmx':'ciudad de mexico','df':'ciudad de mexico','ciudad mexico':'ciudad de mexico','ciudad de mexico':'ciudad de mexico','ciudad de méxico':'ciudad de mexico'
+  , 'nueva jersey':'nueva jersey','new jersey':'nueva jersey','nj':'nueva jersey','metlife':'nueva jersey'
+  , 'los angeles':'los angeles','la':'los angeles','l a':'los angeles','arlington':'arlington','dallas':'arlington','houston':'houston','miami':'miami','atlanta':'atlanta','seattle':'seattle','vancouver':'vancouver','toronto':'toronto','santa clara':'santa clara','philadelphia':'filadelfia','filadelfia':'filadelfia','kansas':'kansas city','kansas city':'kansas city','foxborough':'foxborough','boston':'foxborough'
 };
 function expandQuery(q){ const n=normalizeText(q); return SEARCH_ALIASES[n] || n; }
 function levenshtein(a,b){
@@ -337,6 +372,7 @@ function jumpToMatch(id){
   pendingJumpId = Number(id);
   localStorage.setItem('filterFase', 'Todos');
   localStorage.setItem('filterGrupo', 'Todos');
+  localStorage.setItem('statusFilter', 'Todos');
   localStorage.setItem('filterSearch', '');
   showTab('matches');
 }
@@ -344,15 +380,25 @@ function processPendingJump(){
   if(!pendingJumpId) return;
   const id = pendingJumpId;
   pendingJumpId = null;
-  setTimeout(() => {
+  const focusCard = (retry=false) => {
     const card = document.getElementById('match-' + id);
+    if(!card && !retry){
+      localStorage.setItem('filterFase', 'Todos');
+      localStorage.setItem('filterGrupo', 'Todos');
+      localStorage.setItem('statusFilter', 'Todos');
+      localStorage.setItem('filterSearch', '');
+      renderMatches();
+      setTimeout(() => focusCard(true), 160);
+      return;
+    }
     if(!card) return;
     card.classList.add('jump-target');
     card.scrollIntoView({behavior:'smooth', block:'center'});
     const firstScore = card.querySelector('input[data-field="g1"]');
     if(firstScore){ setTimeout(() => firstScore.focus({preventScroll:true}), 450); }
     setTimeout(() => card.classList.remove('jump-target'), 2500);
-  }, 120);
+  };
+  setTimeout(() => focusCard(false), 120);
 }
 
 function getMatchTeams(m, allocationSet){
@@ -450,7 +496,7 @@ function renderHome(){
     ${next ? `<div class="card jump-card" role="button" tabindex="0" onclick="jumpToMatch(${next.id})" onkeydown="if(event.key==='Enter'){jumpToMatch(${next.id})}"><div class="row spaced"><strong>M${next.id} · ${escapeHtml(next.fase)} ${next.grupo? '· Grupo '+next.grupo : ''}</strong><span class="pill ${isOverdue(next)?'red':'blue'}">${formatDate(next.fecha)} · ${next.hora}</span></div><h2>${escapeHtml(next.partido)}</h2><div class="venue">📍 ${escapeHtml(next.sede)}</div><div class="home-card-actions"><button onclick="event.stopPropagation();jumpToMatch(${next.id})">🎯 Capturar</button>${homeVixButton(next.id)}<button class="vix-search-btn" onclick="searchResultForMatch(event, ${next.id})">🔎 Buscar resultado</button></div></div>` : '<div class="card ok">Todos los partidos tienen marcador capturado.</div>'}
     ${overdue.length ? `<div class="section-title">⚠️ Partidos vencidos sin resultado</div><div class="grid">${overdue.slice(0,4).map(m=>`<div class="card warning-card jump-card" onclick="jumpToMatch(${m.id})"><div class="row spaced"><strong>M${m.id}</strong><span class="pill red">Falta resultado</span></div><div style="font-weight:900;margin-top:6px">${escapeHtml(m.partido)}</div><div class="venue">${formatDate(m.fecha)} · ${m.hora} · ${escapeHtml(m.sede)}</div></div>`).join('')}</div>` : ''}
     <div class="section-title">Accesos rápidos</div>
-    <div class="quick-row"><button onclick="jumpToMatch(${next?next.id:1})">🎯 Ir al próximo</button><button onclick="localStorage.setItem('statusFilter','Vencidos');showTab('matches')">⚠️ Vencidos</button><button onclick="localStorage.setItem('statusFilter','Pendientes');showTab('matches')">⏳ Pendientes</button><button onclick="localStorage.setItem('statusFilter','México');showTab('matches')">🇲🇽 México</button><button onclick="showTab('groups')">📊 Grupos</button><button onclick="showTab('bracket')">🌳 Llave</button></div>
+    <div class="quick-row"><button onclick="jumpToMatch(${next?next.id:1})">🎯 Ir al próximo</button><button onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','Vencidos');showTab('matches')">⚠️ Vencidos</button><button onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','Pendientes');showTab('matches')">⏳ Pendientes</button><button onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','México');showTab('matches')">🇲🇽 México</button><button onclick="showTab('groups')">📊 Grupos</button><button onclick="showTab('bracket')">🌳 Llave</button></div>
     <div class="section-title">Favoritos</div>
     <div class="card">${favs.length ? favs.map(t=>`<span class="pill yellow team-click" onclick="openTeam('${jsStr(t)}')">⭐ ${escapeHtml(t)}</span>`).join(' ') : '<span class="small">Aún no tienes favoritos. En Partidos o Grupos toca la estrella junto a un equipo.</span>'}</div>
     <div class="section-title">Recordatorios</div>
@@ -513,7 +559,7 @@ function renderMatches(){
   const estados = ['Todos','Pendientes','Jugados','Vencidos','México','Favoritos'];
   view.innerHTML = `
     <div class="filters">
-      <input id="searchBox" placeholder="Buscar equipo, sede o fase... sin acentos" value="${escapeHtml(q)}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="search">
+      <input id="searchBox" placeholder="Buscar equipo, sede o fase: mexico, mty, usa..." value="${escapeHtml(q)}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" inputmode="search">
       <select id="faseFilter">${fases.map(f=>`<option ${f===fase?'selected':''}>${escapeHtml(f)}</option>`).join('')}</select>
       <select id="grupoFilter">${grupos.map(g=>`<option ${g===grupo?'selected':''}>${escapeHtml(g)}</option>`).join('')}</select>
       <select id="statusFilter">${estados.map(s=>`<option ${s===status?'selected':''}>${escapeHtml(s)}</option>`).join('')}</select>
@@ -608,7 +654,7 @@ function renderHelp(){
   document.getElementById('help').innerHTML = `<div class="grid">
     <div class="card"><h2>Cómo usarla</h2><ol><li>Entra a <strong>Partidos</strong>.</li><li>Captura <strong>G</strong> para goles de cada equipo.</li><li>En eliminatorias, si empatan, captura <strong>P</strong> para penales.</li><li>Usa <strong>Grupos</strong>, <strong>Mejores 3º</strong>, <strong>Llave</strong> y <strong>Selección</strong> para revisar avances.</li><li>Desde <strong>Inicio</strong>, toca <strong>Próximo pendiente</strong> para ir directo al marcador.</li></ol></div>
     <div class="card"><h2>Filtros y favoritos</h2><p>En <strong>Partidos</strong> puedes filtrar por pendientes, jugados, vencidos, México y favoritos. El buscador ignora mayúsculas, minúsculas y acentos; también entiende abreviaciones como USA, EEUU, MEX, KOR, BRA, etc. Si escribes algo parecido, la app puede sugerir <strong>¿Quisiste decir...?</strong>.</p><p>Toca ☆ para marcar un equipo favorito. Toca el nombre de un equipo para ver su resumen.</p></div>
-    <div class="card"><h2>ViX, búsqueda y borrado individual</h2><p>Si un partido tiene enlace directo cargado, verás <strong>📺 Ver en ViX</strong> dentro de <strong>⋯ Opciones</strong> y en el próximo partido de Inicio. <strong>🔎 Buscar resultado</strong> abre Google con ese partido para consultar marcador, goles o resumen.</p><p>Cada partido tiene una nota opcional. También puedes usar <strong>Borrar este partido</strong> para limpiar solo ese marcador sin borrar todo.</p></div>
+    <div class="card"><h2>ViX, búsqueda y borrado individual</h2><p>Si un partido tiene enlace en vivo, <strong>📺 Ver en ViX</strong> aparece desde 1 hora y media antes del inicio hasta 2 horas y media después. Pasado ese tiempo, si hay enlace de resumen, cambia a <strong>🎬 Ver resumen en ViX</strong>. <strong>🔎 Buscar resultado</strong> abre Google con ese partido para consultar marcador, goles o resumen.</p><p>Cada partido tiene una nota opcional. También puedes usar <strong>Borrar este partido</strong> para limpiar solo ese marcador sin borrar todo.</p></div>
     <div class="card"><h2>Recordatorios</h2><p>La app muestra partidos vencidos sin resultado en Inicio y en el filtro <strong>Vencidos</strong>. También puedes activar avisos del navegador.</p><button onclick="requestNotifications()">🔔 Permitir avisos mientras uso la app</button><p class="small">Importante: en una app web, los avisos no son tan fuertes como una alarma de Android. Si la app está cerrada, puede que no avise hasta que la abras otra vez.</p></div>
     <div class="card"><h2>Botones de respaldo</h2><p><strong>⬇️ Descargar progreso:</strong> guarda tus marcadores, favoritos y notas en un archivo JSON.</p><p><strong>⬆️ Cargar progreso:</strong> recupera un respaldo guardado.</p><p><strong>Borrar marcadores:</strong> limpia marcadores y notas, pero conserva favoritos.</p></div>
     <div class="card"><h2>Instalación en Android</h2>${fileMode ? '<div class="notice">Estás abriendo la app como archivo local. Así funciona para usarla, pero para instalarla como PWA con icono y modo app conviene publicarla en HTTPS, por ejemplo GitHub Pages o Netlify.</div>' : '<div class="ok notice">Cuando esté publicada en HTTPS, usa el botón Instalar o en Chrome: menú ⋮ → Agregar a pantalla principal / Instalar app.</div>'}</div>
