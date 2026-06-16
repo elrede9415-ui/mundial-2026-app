@@ -35,7 +35,7 @@ input,select{background:var(--input); color:var(--text); border:1px solid var(--
 
 @media (min-width:700px){h1{font-size:24px}.filters{grid-template-columns:1fr 180px 180px}.filters input{grid-column:auto}.team-row{grid-template-columns:minmax(0,1fr) 64px 64px}.score{width:64px}.header-inner{padding-left:18px; padding-right:18px}main{padding:20px 18px 92px}}
 
-/* v5: búsqueda flexible y botones ViX discretos */
+/* v8: enlaces ViX externos con vix_links.json */
 .search-helper{grid-column:1 / -1; display:flex; gap:8px; align-items:center; flex-wrap:wrap; min-height:0; margin-top:-2px}
 .suggestion-chip{border:1px solid rgba(255,193,7,.55); color:#ffe8a3; background:rgba(255,193,7,.14); border-radius:999px; padding:6px 9px; font-size:12px; font-weight:800; cursor:pointer}
 .compact-actions{margin-top:10px; border-top:1px solid rgba(255,255,255,.08); padding-top:8px}
@@ -50,13 +50,101 @@ input,select{background:var(--input); color:var(--text); border:1px solid var(--
 .home-card-actions button{font-size:12px; padding:8px 10px; box-shadow:none}
 @media (max-width:520px){.compact-actions .action-row button{flex:1}.home-card-actions button{flex:1}.search-helper{font-size:12px}}
 
+
+/* v9: modo claro/oscuro y calendario */
+.header-tools{display:flex;align-items:center;gap:8px;justify-content:space-between;margin-top:8px}
+.theme-toggle{border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:8px 12px;font-weight:800;cursor:pointer}
+.calendar-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.calendar-toolbar select{min-width:210px}
+.calendar-list{display:grid;gap:10px}
+.calendar-match{display:grid;grid-template-columns:76px 1fr auto;gap:10px;align-items:center;cursor:pointer}
+.calendar-time{font-weight:900;color:var(--primary2);font-size:15px}
+.calendar-teams{font-weight:900}
+.calendar-meta{font-size:12px;color:var(--muted);margin-top:3px}
+.calendar-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.today-badge{background:rgba(25,166,90,.18);border:1px solid rgba(25,166,90,.45);color:#b9ffd8}
+body.light{
+  --bg:#f4f7fb; --card:#ffffff; --card2:#f8fbff; --text:#132238; --muted:#53667f;
+  --line:#d8e2ef; --input:#ffffff; --shadow:0 8px 22px rgba(15,35,64,.10);
+  --primary:#0f4c81; --primary2:#0b77bd; --green:#12834a; --yellow:#b77900; --red:#c93642; --blue:#1e6fd4;
+}
+body.light header{background:linear-gradient(135deg,#eaf3ff 0%,#cfe5ff 100%);border-bottom-color:#c9d7e8}
+body.light h1, body.light .subtitle{color:#132238}
+body.light .theme-toggle{background:#fff;color:#132238;border-color:#cbd8e8}
+body.light .tab{background:#fff;color:#132238;border-color:#cbd8e8}
+body.light .tab.active{background:#0b77bd;color:#fff;border-color:#0b77bd}
+body.light .card, body.light .match-card, body.light .group-card, body.light .team-panel, body.light .bracket-match{background:#fff;color:#132238;border-color:#d8e2ef}
+body.light input, body.light select, body.light textarea{background:#fff!important;color:#132238!important;border-color:#cbd8e8!important}
+body.light input::placeholder{color:#6d7f96}
+body.light .footer-bar, body.light .bottom-nav{background:rgba(244,247,251,.96);border-color:#d8e2ef}
+body.light .bottom-nav button{background:#fff;color:#132238;border-color:#cbd8e8}
+body.light .bottom-nav button.active{background:#0b77bd;color:#fff}
+body.light .pill{background:#edf4ff;color:#132238;border-color:#d8e2ef}
+body.light .notice{background:#edf4ff;color:#132238;border-color:#cbd8e8}
+body.light .venue, body.light .small, body.light .score-label, body.light .label{color:#53667f}
+body.light .vix-search-btn{background:#254467!important;color:#fff!important}
+body.light .vix-btn{background:#5b2bbf!important;color:#fff!important}
+body.light .secondary{background:#e9f1fb!important;color:#132238!important}
+body.light .ghost{background:#fff!important;color:#132238!important;border-color:#cbd8e8!important}
+body.light table th{background:#e9f1fb;color:#132238}
+body.light table td{border-color:#d8e2ef}
+@media (max-width:640px){.calendar-match{grid-template-columns:58px 1fr}.calendar-actions{grid-column:1 / -1;justify-content:flex-start}.header-tools{align-items:flex-start}.theme-toggle{font-size:12px;padding:7px 10px}}
+
+
+/* v10: corrección de contraste en hero e ícono integrado */
+.hero{color:#edf3ff}
+.hero h2,.hero .subtitle{color:#edf3ff!important}
+.hero-icon{width:76px;height:76px;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;background:linear-gradient(145deg,#0d1a2f,#0f4c81);border:1px solid rgba(255,255,255,.18);box-shadow:0 12px 30px rgba(0,0,0,.35);font-weight:900;text-align:center;line-height:1}
+.hero-icon .ball{font-size:27px;line-height:1}
+.hero-icon .mini{font-size:11px;letter-spacing:.2px;color:#fff}
+body.light .hero{background:linear-gradient(135deg,#ffffff 0%,#eaf4ff 60%,#e9fff4 100%);border-color:#cbd8e8;color:#132238}
+body.light .hero h2,body.light .hero .subtitle{color:#132238!important}
+body.light .hero-icon{background:linear-gradient(145deg,#0b77bd,#063b2b);border-color:rgba(15,76,129,.25)}
+body.light .hero-icon .mini{color:#fff}
+body.light .mini-kpi .pill{background:#fff}
+
+
+/* v11 preview: calendario más visual */
+.day-strip{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;margin:2px 0 10px;scrollbar-width:none}
+.day-strip::-webkit-scrollbar{display:none}
+.day-chip{min-width:86px;border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:16px;padding:9px 10px;box-shadow:var(--shadow);cursor:pointer;text-align:left}
+.day-chip.active{border-color:var(--primary2);box-shadow:0 0 0 3px rgba(47,128,237,.18), var(--shadow)}
+.day-chip.today{border-color:rgba(25,166,90,.55)}
+.day-chip .dow{font-size:11px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.3px}
+.day-chip .date{font-size:15px;font-weight:1000;margin-top:2px}
+.day-chip .count{font-size:11px;color:var(--muted);margin-top:2px}
+.day-summary{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:12px}
+.day-summary-main{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.day-title{font-size:21px;font-weight:1000;margin:0}
+.day-sub{color:var(--muted);font-size:13px;margin-top:4px}
+.day-kpis{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.calendar-section{margin-top:14px}
+.calendar-section-title{font-size:14px;font-weight:1000;color:var(--text);margin:0 0 8px;display:flex;align-items:center;gap:8px}
+.calendar-match.en-vivo{border-color:rgba(91,43,191,.65);box-shadow:0 0 0 3px rgba(91,43,191,.12), var(--shadow)}
+.calendar-match.vencido{border-color:rgba(232,80,91,.55)}
+.calendar-match.jugado{border-color:rgba(25,166,90,.55)}
+.calendar-timebox{display:flex;flex-direction:column;gap:3px;align-items:flex-start}
+.calendar-date-mini{font-size:10px;color:var(--muted);font-weight:800}
+.calendar-now{font-size:11px;font-weight:1000;color:#d6c4ff;background:rgba(91,43,191,.22);border:1px solid rgba(91,43,191,.55);padding:3px 7px;border-radius:999px;display:inline-flex;margin-top:5px}
+.calendar-relative{font-size:11px;color:var(--muted);margin-top:4px}
+.calendar-empty{padding:18px;text-align:center;color:var(--muted)}
+body.light .day-chip{background:#fff;color:#132238;border-color:#cbd8e8}
+body.light .day-chip.active{border-color:#0b77bd}
+body.light .calendar-now{color:#4b278f;background:#efe8ff;border-color:#c9b5ff}
+@media (max-width:640px){
+  .day-chip{min-width:78px;padding:8px 9px}
+  .day-title{font-size:18px}
+  .calendar-toolbar select{min-width:100%;width:100%}
+}
+
 </style>
 </head>
 <body>
-<header><div class="header-inner"><h1>🏆 Mundial 2026 · Control Monterrey</h1><div class="subtitle">Calendario, resultados, tablas, mejores terceros y llave visual · Horario de Monterrey, N.L.</div><nav class="tabs" id="tabs"></nav></div></header>
+<header><div class="header-inner"><h1>🏆 Mundial 2026 · Control Monterrey</h1><div class="subtitle">Calendario, resultados, tablas, mejores terceros y llave visual · Horario de Monterrey, N.L.</div><div class="header-tools"><nav class="tabs" id="tabs"></nav><button id="themeToggle" class="theme-toggle" onclick="toggleTheme()">☀️ Modo claro</button></div></div></header>
 <main>
 <section id="home" class="view active"></section>
 <section id="matches" class="view"></section>
+<section id="calendar" class="view"></section>
 <section id="groups" class="view"></section>
 <section id="thirds" class="view"></section>
 <section id="bracket" class="view"></section>
@@ -73,7 +161,7 @@ input,select{background:var(--input); color:var(--text); border:1px solid var(--
 </div></div>
 <script>
 const MATCHES = [{"id": 1, "fase": "Grupo", "grupo": "A", "partido": "México vs Sudáfrica", "team1": "México", "team2": "Sudáfrica", "fecha": "2026-06-11", "hora": "13:00", "fin": "15:00", "sede": "Ciudad de México, México"}, {"id": 2, "fase": "Grupo", "grupo": "A", "partido": "Corea del Sur vs Chequia", "team1": "Corea del Sur", "team2": "Chequia", "fecha": "2026-06-11", "hora": "20:00", "fin": "22:00", "sede": "Zapopan / Guadalajara, México"}, {"id": 3, "fase": "Grupo", "grupo": "B", "partido": "Canadá vs Bosnia y Herzegovina", "team1": "Canadá", "team2": "Bosnia y Herzegovina", "fecha": "2026-06-12", "hora": "13:00", "fin": "15:00", "sede": "Toronto, Canadá"}, {"id": 4, "fase": "Grupo", "grupo": "D", "partido": "Estados Unidos vs Paraguay", "team1": "Estados Unidos", "team2": "Paraguay", "fecha": "2026-06-12", "hora": "19:00", "fin": "21:00", "sede": "Los Ángeles, EUA"}, {"id": 8, "fase": "Grupo", "grupo": "B", "partido": "Catar vs Suiza", "team1": "Catar", "team2": "Suiza", "fecha": "2026-06-13", "hora": "13:00", "fin": "15:00", "sede": "Santa Clara, EUA"}, {"id": 7, "fase": "Grupo", "grupo": "C", "partido": "Brasil vs Marruecos", "team1": "Brasil", "team2": "Marruecos", "fecha": "2026-06-13", "hora": "16:00", "fin": "18:00", "sede": "Nueva Jersey, EUA"}, {"id": 5, "fase": "Grupo", "grupo": "C", "partido": "Haití vs Escocia", "team1": "Haití", "team2": "Escocia", "fecha": "2026-06-13", "hora": "19:00", "fin": "21:00", "sede": "Foxborough, EUA"}, {"id": 6, "fase": "Grupo", "grupo": "D", "partido": "Australia vs Turquía", "team1": "Australia", "team2": "Turquía", "fecha": "2026-06-13", "hora": "22:00", "fin": "00:00", "sede": "Vancouver, Canadá"}, {"id": 10, "fase": "Grupo", "grupo": "E", "partido": "Alemania vs Curazao", "team1": "Alemania", "team2": "Curazao", "fecha": "2026-06-14", "hora": "11:00", "fin": "13:00", "sede": "Houston, EUA"}, {"id": 11, "fase": "Grupo", "grupo": "F", "partido": "Países Bajos vs Japón", "team1": "Países Bajos", "team2": "Japón", "fecha": "2026-06-14", "hora": "14:00", "fin": "16:00", "sede": "Arlington, EUA"}, {"id": 9, "fase": "Grupo", "grupo": "E", "partido": "Costa de Marfil vs Ecuador", "team1": "Costa de Marfil", "team2": "Ecuador", "fecha": "2026-06-14", "hora": "17:00", "fin": "19:00", "sede": "Filadelfia, EUA"}, {"id": 12, "fase": "Grupo", "grupo": "F", "partido": "Suecia vs Túnez", "team1": "Suecia", "team2": "Túnez", "fecha": "2026-06-14", "hora": "20:00", "fin": "22:00", "sede": "Guadalupe / Monterrey, México"}, {"id": 14, "fase": "Grupo", "grupo": "H", "partido": "España vs Cabo Verde", "team1": "España", "team2": "Cabo Verde", "fecha": "2026-06-15", "hora": "10:00", "fin": "12:00", "sede": "Atlanta, EUA"}, {"id": 16, "fase": "Grupo", "grupo": "G", "partido": "Bélgica vs Egipto", "team1": "Bélgica", "team2": "Egipto", "fecha": "2026-06-15", "hora": "13:00", "fin": "15:00", "sede": "Seattle, EUA"}, {"id": 13, "fase": "Grupo", "grupo": "H", "partido": "Arabia Saudita vs Uruguay", "team1": "Arabia Saudita", "team2": "Uruguay", "fecha": "2026-06-15", "hora": "16:00", "fin": "18:00", "sede": "Miami, EUA"}, {"id": 15, "fase": "Grupo", "grupo": "G", "partido": "Irán vs Nueva Zelanda", "team1": "Irán", "team2": "Nueva Zelanda", "fecha": "2026-06-15", "hora": "19:00", "fin": "21:00", "sede": "Los Ángeles, EUA"}, {"id": 17, "fase": "Grupo", "grupo": "I", "partido": "Francia vs Senegal", "team1": "Francia", "team2": "Senegal", "fecha": "2026-06-16", "hora": "13:00", "fin": "15:00", "sede": "Nueva Jersey, EUA"}, {"id": 18, "fase": "Grupo", "grupo": "I", "partido": "Irak vs Noruega", "team1": "Irak", "team2": "Noruega", "fecha": "2026-06-16", "hora": "16:00", "fin": "18:00", "sede": "Foxborough, EUA"}, {"id": 19, "fase": "Grupo", "grupo": "J", "partido": "Argentina vs Argelia", "team1": "Argentina", "team2": "Argelia", "fecha": "2026-06-16", "hora": "19:00", "fin": "21:00", "sede": "Kansas City, EUA"}, {"id": 20, "fase": "Grupo", "grupo": "J", "partido": "Austria vs Jordania", "team1": "Austria", "team2": "Jordania", "fecha": "2026-06-16", "hora": "22:00", "fin": "00:00", "sede": "Santa Clara, EUA"}, {"id": 23, "fase": "Grupo", "grupo": "K", "partido": "Portugal vs RD Congo", "team1": "Portugal", "team2": "RD Congo", "fecha": "2026-06-17", "hora": "11:00", "fin": "13:00", "sede": "Houston, EUA"}, {"id": 22, "fase": "Grupo", "grupo": "L", "partido": "Inglaterra vs Croacia", "team1": "Inglaterra", "team2": "Croacia", "fecha": "2026-06-17", "hora": "14:00", "fin": "16:00", "sede": "Arlington, EUA"}, {"id": 21, "fase": "Grupo", "grupo": "L", "partido": "Ghana vs Panamá", "team1": "Ghana", "team2": "Panamá", "fecha": "2026-06-17", "hora": "17:00", "fin": "19:00", "sede": "Toronto, Canadá"}, {"id": 24, "fase": "Grupo", "grupo": "K", "partido": "Uzbekistán vs Colombia", "team1": "Uzbekistán", "team2": "Colombia", "fecha": "2026-06-17", "hora": "20:00", "fin": "22:00", "sede": "Ciudad de México, México"}, {"id": 25, "fase": "Grupo", "grupo": "A", "partido": "Chequia vs Sudáfrica", "team1": "Chequia", "team2": "Sudáfrica", "fecha": "2026-06-18", "hora": "10:00", "fin": "12:00", "sede": "Atlanta, EUA"}, {"id": 26, "fase": "Grupo", "grupo": "B", "partido": "Suiza vs Bosnia y Herzegovina", "team1": "Suiza", "team2": "Bosnia y Herzegovina", "fecha": "2026-06-18", "hora": "13:00", "fin": "15:00", "sede": "Los Ángeles, EUA"}, {"id": 27, "fase": "Grupo", "grupo": "B", "partido": "Canadá vs Catar", "team1": "Canadá", "team2": "Catar", "fecha": "2026-06-18", "hora": "16:00", "fin": "18:00", "sede": "Vancouver, Canadá"}, {"id": 28, "fase": "Grupo", "grupo": "A", "partido": "México vs Corea del Sur", "team1": "México", "team2": "Corea del Sur", "fecha": "2026-06-18", "hora": "19:00", "fin": "21:00", "sede": "Zapopan / Guadalajara, México"}, {"id": 31, "fase": "Grupo", "grupo": "D", "partido": "Estados Unidos vs Australia", "team1": "Estados Unidos", "team2": "Australia", "fecha": "2026-06-19", "hora": "13:00", "fin": "15:00", "sede": "Seattle, EUA"}, {"id": 30, "fase": "Grupo", "grupo": "C", "partido": "Escocia vs Marruecos", "team1": "Escocia", "team2": "Marruecos", "fecha": "2026-06-19", "hora": "16:00", "fin": "18:00", "sede": "Foxborough, EUA"}, {"id": 29, "fase": "Grupo", "grupo": "C", "partido": "Brasil vs Haití", "team1": "Brasil", "team2": "Haití", "fecha": "2026-06-19", "hora": "18:30", "fin": "20:30", "sede": "Filadelfia, EUA"}, {"id": 32, "fase": "Grupo", "grupo": "D", "partido": "Turquía vs Paraguay", "team1": "Turquía", "team2": "Paraguay", "fecha": "2026-06-19", "hora": "21:00", "fin": "23:00", "sede": "Santa Clara, EUA"}, {"id": 35, "fase": "Grupo", "grupo": "F", "partido": "Países Bajos vs Suecia", "team1": "Países Bajos", "team2": "Suecia", "fecha": "2026-06-20", "hora": "11:00", "fin": "13:00", "sede": "Houston, EUA"}, {"id": 33, "fase": "Grupo", "grupo": "E", "partido": "Alemania vs Costa de Marfil", "team1": "Alemania", "team2": "Costa de Marfil", "fecha": "2026-06-20", "hora": "14:00", "fin": "16:00", "sede": "Toronto, Canadá"}, {"id": 34, "fase": "Grupo", "grupo": "E", "partido": "Ecuador vs Curazao", "team1": "Ecuador", "team2": "Curazao", "fecha": "2026-06-20", "hora": "18:00", "fin": "20:00", "sede": "Kansas City, EUA"}, {"id": 36, "fase": "Grupo", "grupo": "F", "partido": "Túnez vs Japón", "team1": "Túnez", "team2": "Japón", "fecha": "2026-06-20", "hora": "22:00", "fin": "00:00", "sede": "Guadalupe / Monterrey, México"}, {"id": 38, "fase": "Grupo", "grupo": "H", "partido": "España vs Arabia Saudita", "team1": "España", "team2": "Arabia Saudita", "fecha": "2026-06-21", "hora": "10:00", "fin": "12:00", "sede": "Atlanta, EUA"}, {"id": 39, "fase": "Grupo", "grupo": "G", "partido": "Bélgica vs Irán", "team1": "Bélgica", "team2": "Irán", "fecha": "2026-06-21", "hora": "13:00", "fin": "15:00", "sede": "Los Ángeles, EUA"}, {"id": 37, "fase": "Grupo", "grupo": "H", "partido": "Uruguay vs Cabo Verde", "team1": "Uruguay", "team2": "Cabo Verde", "fecha": "2026-06-21", "hora": "16:00", "fin": "18:00", "sede": "Miami, EUA"}, {"id": 40, "fase": "Grupo", "grupo": "G", "partido": "Nueva Zelanda vs Egipto", "team1": "Nueva Zelanda", "team2": "Egipto", "fecha": "2026-06-21", "hora": "19:00", "fin": "21:00", "sede": "Vancouver, Canadá"}, {"id": 43, "fase": "Grupo", "grupo": "J", "partido": "Argentina vs Austria", "team1": "Argentina", "team2": "Austria", "fecha": "2026-06-22", "hora": "11:00", "fin": "13:00", "sede": "Arlington, EUA"}, {"id": 42, "fase": "Grupo", "grupo": "I", "partido": "Francia vs Irak", "team1": "Francia", "team2": "Irak", "fecha": "2026-06-22", "hora": "15:00", "fin": "17:00", "sede": "Filadelfia, EUA"}, {"id": 41, "fase": "Grupo", "grupo": "I", "partido": "Noruega vs Senegal", "team1": "Noruega", "team2": "Senegal", "fecha": "2026-06-22", "hora": "18:00", "fin": "20:00", "sede": "Toronto, Canadá"}, {"id": 44, "fase": "Grupo", "grupo": "J", "partido": "Jordania vs Argelia", "team1": "Jordania", "team2": "Argelia", "fecha": "2026-06-22", "hora": "21:00", "fin": "23:00", "sede": "Santa Clara, EUA"}, {"id": 47, "fase": "Grupo", "grupo": "K", "partido": "Portugal vs Uzbekistán", "team1": "Portugal", "team2": "Uzbekistán", "fecha": "2026-06-23", "hora": "11:00", "fin": "13:00", "sede": "Houston, EUA"}, {"id": 45, "fase": "Grupo", "grupo": "L", "partido": "Inglaterra vs Ghana", "team1": "Inglaterra", "team2": "Ghana", "fecha": "2026-06-23", "hora": "14:00", "fin": "16:00", "sede": "Foxborough, EUA"}, {"id": 46, "fase": "Grupo", "grupo": "L", "partido": "Panamá vs Croacia", "team1": "Panamá", "team2": "Croacia", "fecha": "2026-06-23", "hora": "17:00", "fin": "19:00", "sede": "Foxborough, EUA"}, {"id": 48, "fase": "Grupo", "grupo": "K", "partido": "Colombia vs RD Congo", "team1": "Colombia", "team2": "RD Congo", "fecha": "2026-06-23", "hora": "20:00", "fin": "22:00", "sede": "Zapopan / Guadalajara, México"}, {"id": 51, "fase": "Grupo", "grupo": "B", "partido": "Suiza vs Canadá", "team1": "Suiza", "team2": "Canadá", "fecha": "2026-06-24", "hora": "13:00", "fin": "15:00", "sede": "Vancouver, Canadá"}, {"id": 52, "fase": "Grupo", "grupo": "B", "partido": "Bosnia y Herzegovina vs Catar", "team1": "Bosnia y Herzegovina", "team2": "Catar", "fecha": "2026-06-24", "hora": "13:00", "fin": "15:00", "sede": "Seattle, EUA"}, {"id": 49, "fase": "Grupo", "grupo": "C", "partido": "Escocia vs Brasil", "team1": "Escocia", "team2": "Brasil", "fecha": "2026-06-24", "hora": "16:00", "fin": "18:00", "sede": "Miami, EUA"}, {"id": 50, "fase": "Grupo", "grupo": "C", "partido": "Marruecos vs Haití", "team1": "Marruecos", "team2": "Haití", "fecha": "2026-06-24", "hora": "16:00", "fin": "18:00", "sede": "Atlanta, EUA"}, {"id": 53, "fase": "Grupo", "grupo": "A", "partido": "Chequia vs México", "team1": "Chequia", "team2": "México", "fecha": "2026-06-24", "hora": "19:00", "fin": "21:00", "sede": "Ciudad de México, México"}, {"id": 54, "fase": "Grupo", "grupo": "A", "partido": "Sudáfrica vs Corea del Sur", "team1": "Sudáfrica", "team2": "Corea del Sur", "fecha": "2026-06-24", "hora": "19:00", "fin": "21:00", "sede": "Guadalupe / Monterrey, México"}, {"id": 55, "fase": "Grupo", "grupo": "E", "partido": "Curazao vs Costa de Marfil", "team1": "Curazao", "team2": "Costa de Marfil", "fecha": "2026-06-25", "hora": "14:00", "fin": "16:00", "sede": "Filadelfia, EUA"}, {"id": 56, "fase": "Grupo", "grupo": "E", "partido": "Ecuador vs Alemania", "team1": "Ecuador", "team2": "Alemania", "fecha": "2026-06-25", "hora": "14:00", "fin": "16:00", "sede": "Nueva Jersey, EUA"}, {"id": 57, "fase": "Grupo", "grupo": "F", "partido": "Japón vs Suecia", "team1": "Japón", "team2": "Suecia", "fecha": "2026-06-25", "hora": "17:00", "fin": "19:00", "sede": "Arlington, EUA"}, {"id": 58, "fase": "Grupo", "grupo": "F", "partido": "Túnez vs Países Bajos", "team1": "Túnez", "team2": "Países Bajos", "fecha": "2026-06-25", "hora": "17:00", "fin": "19:00", "sede": "Kansas City, EUA"}, {"id": 59, "fase": "Grupo", "grupo": "D", "partido": "Turquía vs Estados Unidos", "team1": "Turquía", "team2": "Estados Unidos", "fecha": "2026-06-25", "hora": "20:00", "fin": "22:00", "sede": "Los Ángeles, EUA"}, {"id": 60, "fase": "Grupo", "grupo": "D", "partido": "Paraguay vs Australia", "team1": "Paraguay", "team2": "Australia", "fecha": "2026-06-25", "hora": "20:00", "fin": "22:00", "sede": "Santa Clara, EUA"}, {"id": 61, "fase": "Grupo", "grupo": "I", "partido": "Noruega vs Francia", "team1": "Noruega", "team2": "Francia", "fecha": "2026-06-26", "hora": "13:00", "fin": "15:00", "sede": "Foxborough, EUA"}, {"id": 62, "fase": "Grupo", "grupo": "I", "partido": "Senegal vs Irak", "team1": "Senegal", "team2": "Irak", "fecha": "2026-06-26", "hora": "13:00", "fin": "15:00", "sede": "Toronto, Canadá"}, {"id": 65, "fase": "Grupo", "grupo": "H", "partido": "Cabo Verde vs Arabia Saudita", "team1": "Cabo Verde", "team2": "Arabia Saudita", "fecha": "2026-06-26", "hora": "18:00", "fin": "20:00", "sede": "Houston, EUA"}, {"id": 66, "fase": "Grupo", "grupo": "H", "partido": "Uruguay vs España", "team1": "Uruguay", "team2": "España", "fecha": "2026-06-26", "hora": "18:00", "fin": "20:00", "sede": "Zapopan / Guadalajara, México"}, {"id": 63, "fase": "Grupo", "grupo": "G", "partido": "Egipto vs Irán", "team1": "Egipto", "team2": "Irán", "fecha": "2026-06-26", "hora": "21:00", "fin": "23:00", "sede": "Seattle, EUA"}, {"id": 64, "fase": "Grupo", "grupo": "G", "partido": "Nueva Zelanda vs Bélgica", "team1": "Nueva Zelanda", "team2": "Bélgica", "fecha": "2026-06-26", "hora": "21:00", "fin": "23:00", "sede": "Vancouver, Canadá"}, {"id": 67, "fase": "Grupo", "grupo": "L", "partido": "Panamá vs Inglaterra", "team1": "Panamá", "team2": "Inglaterra", "fecha": "2026-06-27", "hora": "15:00", "fin": "17:00", "sede": "Nueva Jersey, EUA"}, {"id": 68, "fase": "Grupo", "grupo": "L", "partido": "Croacia vs Ghana", "team1": "Croacia", "team2": "Ghana", "fecha": "2026-06-27", "hora": "15:00", "fin": "17:00", "sede": "Filadelfia, EUA"}, {"id": 71, "fase": "Grupo", "grupo": "K", "partido": "Colombia vs Portugal", "team1": "Colombia", "team2": "Portugal", "fecha": "2026-06-27", "hora": "17:30", "fin": "19:30", "sede": "Miami, EUA"}, {"id": 72, "fase": "Grupo", "grupo": "K", "partido": "RD Congo vs Uzbekistán", "team1": "RD Congo", "team2": "Uzbekistán", "fecha": "2026-06-27", "hora": "17:30", "fin": "19:30", "sede": "Atlanta, EUA"}, {"id": 69, "fase": "Grupo", "grupo": "J", "partido": "Argelia vs Austria", "team1": "Argelia", "team2": "Austria", "fecha": "2026-06-27", "hora": "20:00", "fin": "22:00", "sede": "Kansas City, EUA"}, {"id": 70, "fase": "Grupo", "grupo": "J", "partido": "Jordania vs Argentina", "team1": "Jordania", "team2": "Argentina", "fecha": "2026-06-27", "hora": "20:00", "fin": "22:00", "sede": "Arlington, EUA"}, {"id": 73, "fase": "Dieciseisavos", "grupo": "", "partido": "2º Grupo A vs 2º Grupo B", "team1": "2º Grupo A", "team2": "2º Grupo B", "fecha": "2026-06-28", "hora": "13:00", "fin": "16:00", "sede": "Los Ángeles, EUA"}, {"id": 76, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo C vs 2º Grupo F", "team1": "1º Grupo C", "team2": "2º Grupo F", "fecha": "2026-06-29", "hora": "11:00", "fin": "14:00", "sede": "Houston, EUA"}, {"id": 74, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo E vs 3º Grupo A/B/C/D/F", "team1": "1º Grupo E", "team2": "3º Grupo A/B/C/D/F", "fecha": "2026-06-29", "hora": "14:30", "fin": "17:30", "sede": "Foxborough, EUA"}, {"id": 75, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo F vs 2º Grupo C", "team1": "1º Grupo F", "team2": "2º Grupo C", "fecha": "2026-06-29", "hora": "19:00", "fin": "22:00", "sede": "Guadalupe / Monterrey, México"}, {"id": 78, "fase": "Dieciseisavos", "grupo": "", "partido": "2º Grupo E vs 2º Grupo I", "team1": "2º Grupo E", "team2": "2º Grupo I", "fecha": "2026-06-30", "hora": "11:00", "fin": "14:00", "sede": "Arlington, EUA"}, {"id": 77, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo I vs 3º Grupo C/D/F/G/H", "team1": "1º Grupo I", "team2": "3º Grupo C/D/F/G/H", "fecha": "2026-06-30", "hora": "15:00", "fin": "18:00", "sede": "Nueva Jersey, EUA"}, {"id": 79, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo A vs 3º Grupo C/E/F/H/I", "team1": "1º Grupo A", "team2": "3º Grupo C/E/F/H/I", "fecha": "2026-06-30", "hora": "19:00", "fin": "22:00", "sede": "Ciudad de México, México"}, {"id": 80, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo L vs 3º Grupo E/H/I/J/K", "team1": "1º Grupo L", "team2": "3º Grupo E/H/I/J/K", "fecha": "2026-07-01", "hora": "10:00", "fin": "13:00", "sede": "Atlanta, EUA"}, {"id": 82, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo G vs 3º Grupo A/E/H/I/J", "team1": "1º Grupo G", "team2": "3º Grupo A/E/H/I/J", "fecha": "2026-07-01", "hora": "14:00", "fin": "17:00", "sede": "Seattle, EUA"}, {"id": 81, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo D vs 3º Grupo B/E/F/I/J", "team1": "1º Grupo D", "team2": "3º Grupo B/E/F/I/J", "fecha": "2026-07-01", "hora": "18:00", "fin": "21:00", "sede": "Santa Clara, EUA"}, {"id": 84, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo H vs 2º Grupo J", "team1": "1º Grupo H", "team2": "2º Grupo J", "fecha": "2026-07-02", "hora": "13:00", "fin": "16:00", "sede": "Los Ángeles, EUA"}, {"id": 83, "fase": "Dieciseisavos", "grupo": "", "partido": "2º Grupo K vs 2º Grupo L", "team1": "2º Grupo K", "team2": "2º Grupo L", "fecha": "2026-07-02", "hora": "17:00", "fin": "20:00", "sede": "Toronto, Canadá"}, {"id": 85, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo B vs 3º Grupo E/F/G/I/J", "team1": "1º Grupo B", "team2": "3º Grupo E/F/G/I/J", "fecha": "2026-07-02", "hora": "21:00", "fin": "00:00", "sede": "Vancouver, Canadá"}, {"id": 88, "fase": "Dieciseisavos", "grupo": "", "partido": "2º Grupo D vs 2º Grupo G", "team1": "2º Grupo D", "team2": "2º Grupo G", "fecha": "2026-07-03", "hora": "12:00", "fin": "15:00", "sede": "Arlington, EUA"}, {"id": 86, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo J vs 2º Grupo H", "team1": "1º Grupo J", "team2": "2º Grupo H", "fecha": "2026-07-03", "hora": "16:00", "fin": "19:00", "sede": "Miami, EUA"}, {"id": 87, "fase": "Dieciseisavos", "grupo": "", "partido": "1º Grupo K vs 3º Grupo D/E/I/J/L", "team1": "1º Grupo K", "team2": "3º Grupo D/E/I/J/L", "fecha": "2026-07-03", "hora": "19:30", "fin": "22:30", "sede": "Kansas City, EUA"}, {"id": 90, "fase": "Octavos de final", "grupo": "", "partido": "Ganador M73 vs Ganador M75", "team1": "Ganador M73", "team2": "Ganador M75", "fecha": "2026-07-04", "hora": "11:00", "fin": "14:00", "sede": "Houston, EUA"}, {"id": 89, "fase": "Octavos de final", "grupo": "", "partido": "Ganador M74 vs Ganador M77", "team1": "Ganador M74", "team2": "Ganador M77", "fecha": "2026-07-04", "hora": "15:00", "fin": "18:00", "sede": "Filadelfia, EUA"}, {"id": 91, "fase": "Octavos de final", "grupo": "", "partido": "Ganador M76 vs Ganador M78", "team1": "Ganador M76", "team2": "Ganador M78", "fecha": "2026-07-05", "hora": "14:00", "fin": "17:00", "sede": "Nueva Jersey, EUA"}, {"id": 92, "fase": "Octavos de final", "grupo": "", "partido": "Ganador M79 vs Ganador M80", "team1": "Ganador M79", "team2": "Ganador M80", "fecha": "2026-07-05", "hora": "18:00", "fin": "21:00", "sede": "Ciudad de México, México"}, {"id": 93, "fase": "Octavos de final", "grupo": "", "partido": "Ganador M83 vs Ganador M84", "team1": "Ganador M83", "team2": "Ganador M84", "fecha": "2026-07-06", "hora": "13:00", "fin": "16:00", "sede": "Arlington, EUA"}, {"id": 94, "fase": "Octavos de final", "grupo": "", "partido": "Ganador M81 vs Ganador M82", "team1": "Ganador M81", "team2": "Ganador M82", "fecha": "2026-07-06", "hora": "18:00", "fin": "21:00", "sede": "Seattle, EUA"}, {"id": 95, "fase": "Octavos de final", "grupo": "", "partido": "Ganador M86 vs Ganador M88", "team1": "Ganador M86", "team2": "Ganador M88", "fecha": "2026-07-07", "hora": "10:00", "fin": "13:00", "sede": "Atlanta, EUA"}, {"id": 96, "fase": "Octavos de final", "grupo": "", "partido": "Ganador M85 vs Ganador M87", "team1": "Ganador M85", "team2": "Ganador M87", "fecha": "2026-07-07", "hora": "14:00", "fin": "17:00", "sede": "Vancouver, Canadá"}, {"id": 97, "fase": "Cuartos de final", "grupo": "", "partido": "Ganador M89 vs Ganador M90", "team1": "Ganador M89", "team2": "Ganador M90", "fecha": "2026-07-09", "hora": "14:00", "fin": "17:00", "sede": "Foxborough, EUA"}, {"id": 98, "fase": "Cuartos de final", "grupo": "", "partido": "Ganador M93 vs Ganador M94", "team1": "Ganador M93", "team2": "Ganador M94", "fecha": "2026-07-10", "hora": "13:00", "fin": "16:00", "sede": "Los Ángeles, EUA"}, {"id": 99, "fase": "Cuartos de final", "grupo": "", "partido": "Ganador M91 vs Ganador M92", "team1": "Ganador M91", "team2": "Ganador M92", "fecha": "2026-07-11", "hora": "15:00", "fin": "18:00", "sede": "Miami, EUA"}, {"id": 100, "fase": "Cuartos de final", "grupo": "", "partido": "Ganador M95 vs Ganador M96", "team1": "Ganador M95", "team2": "Ganador M96", "fecha": "2026-07-11", "hora": "19:00", "fin": "22:00", "sede": "Kansas City, EUA"}, {"id": 101, "fase": "Semifinal", "grupo": "", "partido": "Ganador M97 vs Ganador M98", "team1": "Ganador M97", "team2": "Ganador M98", "fecha": "2026-07-14", "hora": "13:00", "fin": "16:00", "sede": "Arlington, EUA"}, {"id": 102, "fase": "Semifinal", "grupo": "", "partido": "Ganador M99 vs Ganador M100", "team1": "Ganador M99", "team2": "Ganador M100", "fecha": "2026-07-15", "hora": "13:00", "fin": "16:00", "sede": "Atlanta, EUA"}, {"id": 103, "fase": "Tercer lugar", "grupo": "", "partido": "Perdedor M101 vs Perdedor M102", "team1": "Perdedor M101", "team2": "Perdedor M102", "fecha": "2026-07-18", "hora": "15:00", "fin": "18:00", "sede": "Miami, EUA"}, {"id": 104, "fase": "Final", "grupo": "", "partido": "Ganador M101 vs Ganador M102", "team1": "Ganador M101", "team2": "Ganador M102", "fecha": "2026-07-19", "hora": "13:00", "fin": "16:00", "sede": "Nueva Jersey, EUA"}];
-const VIX_LINKS = {
+let VIX_LINKS = {
   "13": "https://vix.com/es-es/live/transmission-matchid-2608256",
   "14": "https://vix.com/es-es/live/transmission-matchid-2608255",
   "15": "https://vix.com/es-es/live/transmission-matchid-2608254",
@@ -142,7 +230,7 @@ const VIX_LINKS = {
   "78": "https://vix.com/es-es/live/transmission-matchid-2608318",
   "79": "https://vix.com/es-es/live/transmission-matchid-2608319"
 };
-const VIX_SUMMARY_LINKS = {
+let VIX_SUMMARY_LINKS = {
   "1": "https://vix.com/es-es/video/video-4904685",
   "2": "https://vix.com/es-es/video/video-4905033",
   "3": "https://vix.com/es-es/video/video-4905558",
@@ -155,11 +243,48 @@ const VIX_SUMMARY_LINKS = {
   "10": "https://vix.com/es-es/video/video-4906330",
   "11": "https://vix.com/es-es/video/video-4906381",
   "12": "https://vix.com/es-es/video/video-4906570",
+  "13": "https://vix.com/es-es/video/video-4907313",
   "14": "https://vix.com/es-es/video/video-4906824",
+  "15": "https://vix.com/es-es/video/video-4907514",
   "16": "https://vix.com/es-es/video/video-4906985"
 };
+let VIX_LINKS_SOURCE = 'integrados';
+
+function applyVixLinksJson(data) {
+  const src = data && data.links ? data.links : data;
+  if(!src || typeof src !== 'object') return false;
+  const live = {};
+  const summary = {};
+  Object.keys(src).forEach(id => {
+    const entry = src[id];
+    if(typeof entry === 'string') {
+      if(entry) live[String(id)] = entry;
+      return;
+    }
+    if(entry && typeof entry === 'object') {
+      if(entry.live) live[String(id)] = String(entry.live).trim();
+      if(entry.summary) summary[String(id)] = String(entry.summary).trim();
+    }
+  });
+  VIX_LINKS = live;
+  VIX_SUMMARY_LINKS = summary;
+  VIX_LINKS_SOURCE = 'vix_links.json';
+  return true;
+}
+async function loadVixLinksJson() {
+  if(location.protocol === 'file:') return false;
+  try {
+    const response = await fetch('./vix_links.json', {cache:'no-store'});
+    if(!response.ok) return false;
+    const data = await response.json();
+    return applyVixLinksJson(data);
+  } catch(err) {
+    console.warn('No se pudo cargar vix_links.json; usando enlaces integrados.', err);
+    return false;
+  }
+}
 const tabs = [
-  ['home','Inicio'], ['matches','Partidos'], ['groups','Grupos'], ['thirds','Mejores 3º'], ['bracket','Llave'], ['team','Selección'], ['help','Instrucciones']
+  ['home','Inicio'], ['matches','Partidos'], ['calendar','Calendario'], ['groups','Grupos'], ['thirds','Mejores 3º'], ['bracket','Llave'], ['team','Selección'], ['help','Instrucciones']
 ];
 const STORE_KEY = 'mundial2026ControlMonterrey_v4';
 const LEGACY_STORE_KEY = 'mundial2026ControlMonterrey_v1';
@@ -244,10 +369,16 @@ function searchResultForMatch(ev, id){
   if(ev) ev.stopPropagation();
   const m = matchById(id); if(!m) return;
   const [t1,t2] = getMatchTeams(m, new Set());
-  const query = `${t1} vs ${t2} Mundial 2026 resultado marcador goles resumen`;
+  const query = `${t1} vs ${t2} Mundial 2026 resultado`;
   window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank', 'noopener');
 }
 function searchVixForMatch(ev, id){ searchResultForMatch(ev, id); }
+function hasStarted(m){ return !!m && new Date() >= getDateTime(m.fecha, m.hora); }
+function resultButton(id){
+  const m = matchById(id);
+  if(!hasStarted(m)) return '';
+  return `<button class="vix-search-btn" onclick="searchResultForMatch(event, ${id})">🔎 Buscar resultado</button>`;
+}
 function normalizeText(s){
   return String(s ?? '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9ñ\s]/g,' ').replace(/\s+/g,' ').trim();
 }
@@ -349,6 +480,23 @@ function notifyOverdue(){
 }
 setInterval(notifyOverdue, 60000);
 
+function applyTheme(theme){
+  const selected = theme === 'light' ? 'light' : 'dark';
+  document.body.classList.toggle('light', selected === 'light');
+  localStorage.setItem('uiTheme', selected);
+  updateThemeButton();
+}
+function toggleTheme(){
+  applyTheme(document.body.classList.contains('light') ? 'dark' : 'light');
+}
+function updateThemeButton(){
+  const b = document.getElementById('themeToggle');
+  if(!b) return;
+  b.textContent = document.body.classList.contains('light') ? '🌙 Modo oscuro' : '☀️ Modo claro';
+}
+function initTheme(){
+  applyTheme(localStorage.getItem('uiTheme') || 'dark');
+}
 
 function buildTabs(){
   const nav = document.getElementById('tabs');
@@ -356,7 +504,7 @@ function buildTabs(){
   nav.addEventListener('click', e => { if(e.target.dataset.tab) showTab(e.target.dataset.tab); });
   const bottom = document.getElementById('bottomNav');
   if(bottom){
-    const mainTabs = [['home','🏠'],['matches','⚽'],['groups','📊'],['bracket','🌳'],['team','⭐']];
+    const mainTabs = [['home','🏠'],['matches','⚽'],['calendar','📅'],['groups','📊'],['bracket','🌳'],['team','⭐']];
     bottom.innerHTML = mainTabs.map(([id,label]) => `<button class="${id==='home'?'active':''}" data-tab="${id}">${label}</button>`).join('');
     bottom.addEventListener('click', e => { if(e.target.dataset.tab) showTab(e.target.dataset.tab); });
   }
@@ -485,7 +633,7 @@ function renderHome(){
   const favs = favorites();
   const goals = MATCHES.reduce((sum,m)=>{ const r=res(m.id); const g1=valNum(r.g1), g2=valNum(r.g2); return sum + (g1??0) + (g2??0); },0);
   document.getElementById('home').innerHTML = `
-    <div class="hero"><img src="icons/icon-192.png" alt="Icono Mundial 2026"><div><h2>Mundial 2026 Control</h2><div class="subtitle">Captura marcadores, revisa tablas, mejores terceros y llave visual en horario de Monterrey.</div><div class="mini-kpi"><span class="pill blue">${played}/104 capturados</span><span class="pill green">${groupDone}/12 grupos completos</span><span class="pill yellow">${goals} goles</span></div></div></div>
+    <div class="hero"><div class="hero-icon" aria-label="Icono Mundial 2026"><div class="ball">⚽</div><div class="mini">Mundial</div><div class="mini">2026</div></div><div><h2>Mundial 2026 Control</h2><div class="subtitle">Captura marcadores, revisa tablas, mejores terceros y llave visual en horario de Monterrey.</div><div class="mini-kpi"><span class="pill blue">${played}/104 capturados</span><span class="pill green">${groupDone}/12 grupos completos</span><span class="pill yellow">${goals} goles</span></div></div></div>
     <div class="grid cards">
       <div class="card"><div class="kpi">${played}</div><div class="label">Partidos jugados</div></div>
       <div class="card"><div class="kpi">${104-played}</div><div class="label">Pendientes</div></div>
@@ -493,10 +641,10 @@ function renderHome(){
       <div class="card champion"><div class="kpi">${escapeHtml(champion || '—')}</div><div class="label">Campeón</div></div>
     </div>
     <div class="section-title">Próximo pendiente</div>
-    ${next ? `<div class="card jump-card" role="button" tabindex="0" onclick="jumpToMatch(${next.id})" onkeydown="if(event.key==='Enter'){jumpToMatch(${next.id})}"><div class="row spaced"><strong>M${next.id} · ${escapeHtml(next.fase)} ${next.grupo? '· Grupo '+next.grupo : ''}</strong><span class="pill ${isOverdue(next)?'red':'blue'}">${formatDate(next.fecha)} · ${next.hora}</span></div><h2>${escapeHtml(next.partido)}</h2><div class="venue">📍 ${escapeHtml(next.sede)}</div><div class="home-card-actions"><button onclick="event.stopPropagation();jumpToMatch(${next.id})">🎯 Capturar</button>${homeVixButton(next.id)}<button class="vix-search-btn" onclick="searchResultForMatch(event, ${next.id})">🔎 Buscar resultado</button></div></div>` : '<div class="card ok">Todos los partidos tienen marcador capturado.</div>'}
+    ${next ? `<div class="card jump-card" role="button" tabindex="0" onclick="jumpToMatch(${next.id})" onkeydown="if(event.key==='Enter'){jumpToMatch(${next.id})}"><div class="row spaced"><strong>M${next.id} · ${escapeHtml(next.fase)} ${next.grupo? '· Grupo '+next.grupo : ''}</strong><span class="pill ${isOverdue(next)?'red':'blue'}">${formatDate(next.fecha)} · ${next.hora}</span></div><h2>${escapeHtml(next.partido)}</h2><div class="venue">📍 ${escapeHtml(next.sede)}</div><div class="home-card-actions"><button onclick="event.stopPropagation();jumpToMatch(${next.id})">🎯 Capturar</button>${homeVixButton(next.id)}${resultButton(next.id)}</div></div>` : '<div class="card ok">Todos los partidos tienen marcador capturado.</div>'}
     ${overdue.length ? `<div class="section-title">⚠️ Partidos vencidos sin resultado</div><div class="grid">${overdue.slice(0,4).map(m=>`<div class="card warning-card jump-card" onclick="jumpToMatch(${m.id})"><div class="row spaced"><strong>M${m.id}</strong><span class="pill red">Falta resultado</span></div><div style="font-weight:900;margin-top:6px">${escapeHtml(m.partido)}</div><div class="venue">${formatDate(m.fecha)} · ${m.hora} · ${escapeHtml(m.sede)}</div></div>`).join('')}</div>` : ''}
     <div class="section-title">Accesos rápidos</div>
-    <div class="quick-row"><button onclick="jumpToMatch(${next?next.id:1})">🎯 Ir al próximo</button><button onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','Vencidos');showTab('matches')">⚠️ Vencidos</button><button onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','Pendientes');showTab('matches')">⏳ Pendientes</button><button onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','México');showTab('matches')">🇲🇽 México</button><button onclick="showTab('groups')">📊 Grupos</button><button onclick="showTab('bracket')">🌳 Llave</button></div>
+    <div class="quick-row"><button onclick="jumpToMatch(${next?next.id:1})">🎯 Ir al próximo</button><button onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','Vencidos');showTab('matches')">⚠️ Vencidos</button><button onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','Pendientes');showTab('matches')">⏳ Pendientes</button><button onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','México');showTab('matches')">🇲🇽 México</button><button onclick="showTab('calendar')">📅 Calendario</button><button onclick="showTab('groups')">📊 Grupos</button><button onclick="showTab('bracket')">🌳 Llave</button></div>
     <div class="section-title">Favoritos</div>
     <div class="card">${favs.length ? favs.map(t=>`<span class="pill yellow team-click" onclick="openTeam('${jsStr(t)}')">⭐ ${escapeHtml(t)}</span>`).join(' ') : '<span class="small">Aún no tienes favoritos. En Partidos o Grupos toca la estrella junto a un equipo.</span>'}</div>
     <div class="section-title">Recordatorios</div>
@@ -602,13 +750,151 @@ function matchCard(m){
       <summary>⋯ Opciones</summary>
       <div class="action-row">
         ${vixButton(m.id)}
-        <button class="vix-search-btn" onclick="searchResultForMatch(event, ${m.id})">🔎 Buscar resultado</button>
+        ${resultButton(m.id)}
         <button class="secondary" onclick="jumpToMatch(${m.id})">🎯 Enfocar captura</button>
         <button class="ghost" onclick="resetMatch(${m.id})">↩️ Borrar este partido</button>
       </div>
     </details>
   </div>`;
 }
+
+function localDateKey(d){
+  const y=d.getFullYear(), m=String(d.getMonth()+1).padStart(2,'0'), day=String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+function calendarDefaultDate(){
+  const dates = Array.from(new Set(MATCHES.map(m=>m.fecha))).sort();
+  const today = localDateKey(new Date());
+  return dates.find(d=>d>=today) || dates[dates.length-1] || today;
+}
+function setCalendarDate(date){ localStorage.setItem('calendarDate', date); renderCalendar(); }
+function setCalendarToToday(){
+  const today = localDateKey(new Date());
+  const dates = Array.from(new Set(MATCHES.map(m=>m.fecha))).sort();
+  setCalendarDate(dates.includes(today) ? today : calendarDefaultDate());
+}
+function setCalendarToTomorrow(){
+  const t = new Date(); t.setDate(t.getDate()+1);
+  const key = localDateKey(t);
+  const dates = Array.from(new Set(MATCHES.map(m=>m.fecha))).sort();
+  setCalendarDate(dates.includes(key) ? key : calendarDefaultDate());
+}
+
+function timeInfoForMatch(m){
+  const now = new Date();
+  const start = getDateTime(m.fecha, m.hora);
+  const end = getEndDate(m);
+  const mins = Math.round((start - now) / 60000);
+  if(now >= start && now <= end) return {label:'EN JUEGO', cls:'en-vivo', rel:'El partido ya inició'};
+  if(now > end){
+    const past = Math.round((now - end)/60000);
+    if(past < 90) return {label:'Terminó hace poco', cls:'vencido', rel:`Terminó hace ${past} min aprox.`};
+    return {label:'Ya pasó', cls:'vencido', rel:`Terminó hace ${Math.floor(past/60)} h aprox.`};
+  }
+  if(mins <= 90) return {label:'Por iniciar', cls:'en-vivo', rel:`Empieza en ${mins} min`};
+  if(mins < 24*60) return {label:'Hoy', cls:'', rel:`Empieza en ${Math.floor(mins/60)} h ${mins%60} min`};
+  return {label:'Programado', cls:'', rel:''};
+}
+function calendarStatusGroup(m){
+  if(hasResult(m)) return 'Jugados';
+  if(isOverdue(m)) return 'Vencidos sin resultado';
+  return 'Pendientes';
+}
+function dayChipLabel(dateStr){
+  const d = new Date(dateStr + 'T12:00:00');
+  const dow = d.toLocaleDateString('es-MX',{weekday:'short'}).replace('.','');
+  const date = d.toLocaleDateString('es-MX',{day:'numeric', month:'short'}).replace('.','');
+  return {dow, date};
+}
+function renderCalendar(){
+  const view = document.getElementById('calendar');
+  if(!view) return;
+  const dates = Array.from(new Set(MATCHES.map(m=>m.fecha))).sort();
+  let selected = localStorage.getItem('calendarDate') || calendarDefaultDate();
+  if(!dates.includes(selected)) selected = calendarDefaultDate();
+  const today = localDateKey(new Date());
+  const games = MATCHES.filter(m=>m.fecha===selected).sort((a,b)=>a.hora.localeCompare(b.hora));
+  const played = games.filter(hasResult);
+  const overdue = games.filter(m=>!hasResult(m) && isOverdue(m));
+  const pending = games.filter(m=>!hasResult(m) && !isOverdue(m));
+  const favSet = new Set(favorites());
+  const favGames = games.filter(m => {
+    const [t1,t2] = getMatchTeams(m, new Set());
+    return favSet.has(t1) || favSet.has(t2);
+  });
+
+  const dayStrip = dates.map(d => {
+    const info = dayChipLabel(d);
+    const count = MATCHES.filter(m=>m.fecha===d).length;
+    return `<button class="day-chip ${d===selected?'active':''} ${d===today?'today':''}" onclick="setCalendarDate('${d}')">
+      <div class="dow">${escapeHtml(info.dow)}${d===today?' · Hoy':''}</div>
+      <div class="date">${escapeHtml(info.date)}</div>
+      <div class="count">${count} partido${count===1?'':'s'}</div>
+    </button>`;
+  }).join('');
+
+  function renderMatch(m){
+    const r=res(m.id); const [t1,t2]=getMatchTeams(m, new Set()); const [label,color]=statusLabel(m); const ti=timeInfoForMatch(m);
+    const extraClass = hasResult(m) ? 'jugado' : (isOverdue(m) ? 'vencido' : ti.cls);
+    return `<div class="card calendar-match ${extraClass}" onclick="jumpToMatch(${m.id})" id="cal-${m.id}">
+      <div class="calendar-timebox">
+        <div class="calendar-time">${escapeHtml(m.hora)}</div>
+        <div class="calendar-date-mini">M${m.id}</div>
+      </div>
+      <div>
+        <div class="calendar-teams">${escapeHtml(t1)} vs ${escapeHtml(t2)}</div>
+        <div class="calendar-meta">${escapeHtml(m.fase)}${m.grupo?` · Grupo ${escapeHtml(m.grupo)}`:''} · ${escapeHtml(m.sede)}</div>
+        ${ti.rel ? `<div class="calendar-relative">${escapeHtml(ti.rel)}</div>` : ''}
+        ${ti.cls==='en-vivo' && !hasResult(m) ? `<span class="calendar-now">${escapeHtml(ti.label)}</span>` : ''}
+      </div>
+      <div class="calendar-actions" onclick="event.stopPropagation()">
+        <span class="pill ${color}">${label}</span>
+        <button class="secondary" onclick="jumpToMatch(${m.id})">🎯 Capturar</button>
+        ${vixButton(m.id)}
+        ${resultButton(m.id)}
+      </div>
+    </div>`;
+  }
+  function section(title, icon, arr){
+    if(!arr.length) return '';
+    return `<div class="calendar-section"><div class="calendar-section-title">${icon} ${title} <span class="pill">${arr.length}</span></div><div class="calendar-list">${arr.map(renderMatch).join('')}</div></div>`;
+  }
+
+  view.innerHTML = `
+    <div class="card" style="margin-bottom:12px">
+      <div class="section-title" style="margin-top:0">📅 Calendario por día</div>
+      <div class="small">Desliza los días, toca un partido y te lleva directo a capturar goles. También limpia búsquedas y filtros anteriores.</div>
+      <div class="day-strip">${dayStrip}</div>
+      <div class="calendar-toolbar">
+        <select id="calendarDateSelect">${dates.map(d=>`<option value="${d}" ${d===selected?'selected':''}>${formatDate(d)}${d===today?' · Hoy':''}</option>`).join('')}</select>
+        <button class="secondary" onclick="setCalendarToToday()">Hoy</button>
+        <button class="secondary" onclick="setCalendarToTomorrow()">Mañana</button>
+        <button class="secondary" onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','Vencidos');showTab('matches')">⚠️ Vencidos</button>
+      </div>
+    </div>
+    <div class="card day-summary">
+      <div class="day-summary-main">
+        <div>
+          <h2 class="day-title">${formatDate(selected)} ${selected===today?'<span class="pill today-badge">Hoy</span>':''}</h2>
+          <div class="day-sub">${games.length} partido${games.length===1?'':'s'} · ${played.length} jugado${played.length===1?'':'s'} · ${pending.length} pendiente${pending.length===1?'':'s'} · ${overdue.length} vencido${overdue.length===1?'':'s'} sin resultado</div>
+          ${favGames.length ? `<div class="day-sub">⭐ Juega favorito: ${favGames.map(m=>escapeHtml(m.partido)).join(' · ')}</div>` : ''}
+        </div>
+        <div class="day-kpis">
+          <span class="pill blue">${pending.length} pendientes</span>
+          <span class="pill red">${overdue.length} vencidos</span>
+          <span class="pill green">${played.length} jugados</span>
+        </div>
+      </div>
+    </div>
+    ${games.length ? [
+      section('Vencidos sin resultado','⚠️', overdue),
+      section('Pendientes','⏳', pending),
+      section('Jugados','✅', played)
+    ].join('') : '<div class="card calendar-empty">No hay partidos este día.</div>'}`;
+  const sel = document.getElementById('calendarDateSelect');
+  if(sel) sel.onchange = e => setCalendarDate(e.target.value);
+}
+
 function renderGroups(){
   const tables=calcTables();
   document.getElementById('groups').innerHTML = `<div class="row" style="margin-bottom:12px"><span class="pill green">Verde: 1º y 2º</span><span class="pill yellow">Amarillo: 3º</span><span class="pill red">Rojo: 4º</span><span class="pill blue">Toca equipo para resumen</span></div><div class="group-grid">${GROUPS.map(g=>groupCard(g,tables[g])).join('')}</div>`;
@@ -652,19 +938,19 @@ function renderTeam(){
 function renderHelp(){
   const fileMode = location.protocol === 'file:';
   document.getElementById('help').innerHTML = `<div class="grid">
-    <div class="card"><h2>Cómo usarla</h2><ol><li>Entra a <strong>Partidos</strong>.</li><li>Captura <strong>G</strong> para goles de cada equipo.</li><li>En eliminatorias, si empatan, captura <strong>P</strong> para penales.</li><li>Usa <strong>Grupos</strong>, <strong>Mejores 3º</strong>, <strong>Llave</strong> y <strong>Selección</strong> para revisar avances.</li><li>Desde <strong>Inicio</strong>, toca <strong>Próximo pendiente</strong> para ir directo al marcador.</li></ol></div>
+    <div class="card"><h2>Cómo usarla</h2><ol><li>Entra a <strong>Partidos</strong>.</li><li>Captura <strong>G</strong> para goles de cada equipo.</li><li>En eliminatorias, si empatan, captura <strong>P</strong> para penales.</li><li>Usa <strong>Calendario</strong>, <strong>Grupos</strong>, <strong>Mejores 3º</strong>, <strong>Llave</strong> y <strong>Selección</strong> para revisar avances.</li><li>Desde <strong>Inicio</strong>, toca <strong>Próximo pendiente</strong> para ir directo al marcador.</li></ol></div>
     <div class="card"><h2>Filtros y favoritos</h2><p>En <strong>Partidos</strong> puedes filtrar por pendientes, jugados, vencidos, México y favoritos. El buscador ignora mayúsculas, minúsculas y acentos; también entiende abreviaciones como USA, EEUU, MEX, KOR, BRA, etc. Si escribes algo parecido, la app puede sugerir <strong>¿Quisiste decir...?</strong>.</p><p>Toca ☆ para marcar un equipo favorito. Toca el nombre de un equipo para ver su resumen.</p></div>
-    <div class="card"><h2>ViX, búsqueda y borrado individual</h2><p>Si un partido tiene enlace en vivo, <strong>📺 Ver en ViX</strong> aparece desde 1 hora y media antes del inicio hasta 2 horas y media después. Pasado ese tiempo, si hay enlace de resumen, cambia a <strong>🎬 Ver resumen en ViX</strong>. <strong>🔎 Buscar resultado</strong> abre Google con ese partido para consultar marcador, goles o resumen.</p><p>Cada partido tiene una nota opcional. También puedes usar <strong>Borrar este partido</strong> para limpiar solo ese marcador sin borrar todo.</p></div>
+    <div class="card"><h2>ViX, búsqueda y borrado individual</h2><p>Si un partido tiene enlace en vivo, <strong>📺 Ver en ViX</strong> aparece desde 1 hora y media antes del inicio hasta 2 horas y media después. Pasado ese tiempo, si hay enlace de resumen, cambia a <strong>🎬 Ver resumen en ViX</strong>. <strong>🔎 Buscar resultado</strong> aparece solo cuando el partido ya inició y abre Google con una búsqueda limpia para intentar mostrar el marcador grande.</p><p>Puedes cambiar entre modo claro y oscuro desde el botón superior. Cada partido tiene una nota opcional. También puedes usar <strong>Borrar este partido</strong> para limpiar solo ese marcador sin borrar todo.</p></div>
     <div class="card"><h2>Recordatorios</h2><p>La app muestra partidos vencidos sin resultado en Inicio y en el filtro <strong>Vencidos</strong>. También puedes activar avisos del navegador.</p><button onclick="requestNotifications()">🔔 Permitir avisos mientras uso la app</button><p class="small">Importante: en una app web, los avisos no son tan fuertes como una alarma de Android. Si la app está cerrada, puede que no avise hasta que la abras otra vez.</p></div>
     <div class="card"><h2>Botones de respaldo</h2><p><strong>⬇️ Descargar progreso:</strong> guarda tus marcadores, favoritos y notas en un archivo JSON.</p><p><strong>⬆️ Cargar progreso:</strong> recupera un respaldo guardado.</p><p><strong>Borrar marcadores:</strong> limpia marcadores y notas, pero conserva favoritos.</p></div>
     <div class="card"><h2>Instalación en Android</h2>${fileMode ? '<div class="notice">Estás abriendo la app como archivo local. Así funciona para usarla, pero para instalarla como PWA con icono y modo app conviene publicarla en HTTPS, por ejemplo GitHub Pages o Netlify.</div>' : '<div class="ok notice">Cuando esté publicada en HTTPS, usa el botón Instalar o en Chrome: menú ⋮ → Agregar a pantalla principal / Instalar app.</div>'}</div>
     <div class="card"><h2>Importante sobre terceros</h2><p>Los cruces de mejores terceros dependen de la combinación oficial de grupos clasificados. La app los sugiere automáticamente, pero puedes editar los equipos de cada partido de eliminatoria en Partidos.</p></div>
   </div>`;
 }
-function renderAll(){ renderHome(); if(document.getElementById('matches').classList.contains('active')) renderMatches(); renderGroups(); renderThirds(); renderBracket(); renderTeam(); renderHelp(); }
+function renderAll(){ renderHome(); if(document.getElementById('matches').classList.contains('active')) renderMatches(); if(document.getElementById('calendar').classList.contains('active')) renderCalendar(); renderGroups(); renderThirds(); renderBracket(); renderTeam(); renderHelp(); }
 
 function exportProgress(){
-  const blob = new Blob([JSON.stringify({app:'Mundial 2026 Control Monterrey', version:6, exportedAt:new Date().toISOString(), state}, null, 2)], {type:'application/json'});
+  const blob = new Blob([JSON.stringify({app:'Mundial 2026 Control Monterrey', version:11, exportedAt:new Date().toISOString(), state}, null, 2)], {type:'application/json'});
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mundial_2026_progreso.json'; a.click(); URL.revokeObjectURL(a.href);
 }
 function importProgress(file){
@@ -682,7 +968,7 @@ document.getElementById('importFile').onchange = e => { if(e.target.files[0]) im
 document.getElementById('resetBtn').onclick = resetScores;
 
 if('serviceWorker' in navigator && location.protocol !== 'file:') navigator.serviceWorker.register('./service-worker.js').catch(()=>{});
-buildTabs(); renderAll(); notifyOverdue();
+initTheme(); buildTabs(); renderAll(); loadVixLinksJson().finally(() => { renderAll(); notifyOverdue(); });
 </script>
 </body>
 </html>
