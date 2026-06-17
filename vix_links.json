@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "updated_at": "2026-06-16 22:57",
+  "version": 3,
+  "updated_at": "2026-06-17 08:35",
   "instructions": "Edita live para el enlace en vivo y summary para el resumen. Conserva el número de partido como llave. La app lee este archivo desde GitHub Pages.",
   "live_window_minutes": {
     "before": 90,
@@ -30,37 +30,37 @@
     "5": {
       "match": "Haití vs Escocia",
       "live": "",
-      "summary": "https://vix.com/es-es/video/video-4906173"
+      "summary": "https://vix.com/es-es/video/video-4906175"
     },
     "6": {
       "match": "Australia vs Turquía",
       "live": "",
-      "summary": "https://vix.com/es-es/video/video-4906233"
+      "summary": "https://vix.com/es-es/video/video-4906252"
     },
     "7": {
       "match": "Brasil vs Marruecos",
       "live": "",
-      "summary": "https://vix.com/es-es/video/video-4906098"
+      "summary": "https://vix.com/es-es/video/video-4906100"
     },
     "8": {
       "match": "Catar vs Suiza",
       "live": "",
-      "summary": "https://vix.com/es-es/video/video-4906038"
+      "summary": "https://vix.com/es-es/video/video-4906040"
     },
     "9": {
       "match": "Costa de Marfil vs Ecuador",
       "live": "",
-      "summary": "https://vix.com/es-es/video/video-4906489"
+      "summary": "https://vix.com/es-es/video/video-4906490"
     },
     "10": {
       "match": "Alemania vs Curazao",
       "live": "",
-      "summary": "https://vix.com/es-es/video/video-4906330"
+      "summary": "https://vix.com/es-es/video/video-4906335"
     },
     "11": {
       "match": "Países Bajos vs Japón",
       "live": "",
-      "summary": "https://vix.com/es-es/video/video-4906381"
+      "summary": "https://vix.com/es-es/video/video-4906383"
     },
     "12": {
       "match": "Suecia vs Túnez",
@@ -70,7 +70,7 @@
     "13": {
       "match": "Arabia Saudita vs Uruguay",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608256",
-      "summary": "https://vix.com/es-es/video/video-4907313"
+      "summary": "https://vix.com/es-es/video/video-4907318"
     },
     "14": {
       "match": "España vs Cabo Verde",
@@ -80,7 +80,7 @@
     "15": {
       "match": "Irán vs Nueva Zelanda",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608254",
-      "summary": "https://vix.com/es-es/video/video-4907514"
+      "summary": "https://vix.com/es-es/video/video-4907516"
     },
     "16": {
       "match": "Bélgica vs Egipto",
@@ -90,22 +90,22 @@
     "17": {
       "match": "Francia vs Senegal",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608257",
-      "summary": "https://vix.com/es-es/video/video-4907929"
+      "summary": "https://vix.com/es-es/video/video-4907932"
     },
     "18": {
       "match": "Irak vs Noruega",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608258",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4908140"
     },
     "19": {
       "match": "Argentina vs Argelia",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608259",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4908305"
     },
     "20": {
       "match": "Austria vs Jordania",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608260",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4908437"
     },
     "21": {
       "match": "Ghana vs Panamá",
