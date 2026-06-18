@@ -1,6 +1,6 @@
 {
-  "version": 4,
-  "updated_at": "2026-06-17 21:17",
+  "version": 5,
+  "updated_at": "2026-06-18 03:12",
   "instructions": "Edita live para el enlace en vivo y summary para el resumen. Conserva el número de partido como llave. La app lee este archivo desde GitHub Pages.",
   "live_window_minutes": {
     "before": 90,
@@ -120,17 +120,17 @@
     "23": {
       "match": "Portugal vs RD Congo",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608261",
-      "summary": "https://vix.com/es-es/video/video-4908791"
+      "summary": ""
     },
     "24": {
-      "match": "Uzbekistán vs Colombia",
+      "match": "Inglaterra vs Croacia",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608262",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4909046"
     },
     "25": {
-      "match": "Chequia vs Sudáfrica",
+      "match": "Ghana vs Panamá",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608266",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4909240"
     },
     "26": {
       "match": "Suiza vs Bosnia y Herzegovina",
