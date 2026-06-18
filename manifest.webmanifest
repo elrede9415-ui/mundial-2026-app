@@ -1,10 +1,10 @@
 {
-  "name": "Mundial 2026 Control Monterrey",
+  "name": "Mundial 2026 · Control",
   "short_name": "Mundial 2026",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0b1220",
-  "theme_color": "#063b2b",
+  "theme_color": "#0f4c81",
   "orientation": "portrait-primary",
   "icons": [
     {
