@@ -137,6 +137,20 @@ body.light .calendar-now{color:#4b278f;background:#efe8ff;border-color:#c9b5ff}
   .calendar-toolbar select{min-width:100%;width:100%}
 }
 
+
+/* v12: conservar posición de la barra de días */
+.day-strip{scroll-behavior:smooth}
+.day-chip.active{scroll-margin-inline:16px}
+
+
+/* v13 prueba: bloqueo de resultados, marcador visible y calendario sin saltos */
+.day-strip{scroll-behavior:auto!important}
+.calendar-score-badge{display:inline-flex;align-items:center;justify-content:center;min-width:58px;margin:0 7px;padding:4px 9px;border-radius:10px;background:var(--primary2);color:#fff;font-size:17px;font-weight:1000;box-shadow:0 4px 12px rgba(22,129,196,.22)}
+.locked-result{display:grid;gap:8px;padding:10px;border:1px solid var(--line);background:var(--card2);border-radius:14px}
+.locked-team{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:7px 4px;border-bottom:1px dashed var(--line)}
+.locked-team:last-child{border-bottom:0}.locked-team-name{font-weight:900}.locked-score{font-size:24px;font-weight:1000;min-width:38px;text-align:center}.locked-penalties{font-size:11px;color:var(--muted);text-align:right}.result-locked-note{font-size:11px;color:var(--muted);margin-top:7px}
+body.light .locked-result{background:#f5f9ff}body.light .calendar-score-badge{background:#0b77bd;color:#fff}
+
 </style>
 </head>
 <body>
@@ -235,18 +249,23 @@ let VIX_SUMMARY_LINKS = {
   "2": "https://vix.com/es-es/video/video-4905033",
   "3": "https://vix.com/es-es/video/video-4905558",
   "4": "https://vix.com/es-es/video/video-4905870",
-  "5": "https://vix.com/es-es/video/video-4906173",
-  "6": "https://vix.com/es-es/video/video-4906233",
-  "7": "https://vix.com/es-es/video/video-4906098",
-  "8": "https://vix.com/es-es/video/video-4906038",
-  "9": "https://vix.com/es-es/video/video-4906489",
-  "10": "https://vix.com/es-es/video/video-4906330",
-  "11": "https://vix.com/es-es/video/video-4906381",
+  "5": "https://vix.com/es-es/video/video-4906175",
+  "6": "https://vix.com/es-es/video/video-4906252",
+  "7": "https://vix.com/es-es/video/video-4906100",
+  "8": "https://vix.com/es-es/video/video-4906040",
+  "9": "https://vix.com/es-es/video/video-4906490",
+  "10": "https://vix.com/es-es/video/video-4906335",
+  "11": "https://vix.com/es-es/video/video-4906383",
   "12": "https://vix.com/es-es/video/video-4906570",
-  "13": "https://vix.com/es-es/video/video-4907313",
+  "13": "https://vix.com/es-es/video/video-4907318",
   "14": "https://vix.com/es-es/video/video-4906824",
-  "15": "https://vix.com/es-es/video/video-4907514",
-  "16": "https://vix.com/es-es/video/video-4906985"
+  "15": "https://vix.com/es-es/video/video-4907516",
+  "16": "https://vix.com/es-es/video/video-4906985",
+  "17": "https://vix.com/es-es/video/video-4907932",
+  "18": "https://vix.com/es-es/video/video-4908140",
+  "19": "https://vix.com/es-es/video/video-4908305",
+  "20": "https://vix.com/es-es/video/video-4908437",
+  "23": "https://vix.com/es-es/video/video-4908791"
 };
 let VIX_LINKS_SOURCE = 'integrados';
 
@@ -300,6 +319,9 @@ const ROUND_IDS = {
 let state = loadState();
 let deferredPrompt = null;
 let pendingJumpId = null;
+const EDITING_MATCHES = new Set();
+let calendarStripScrollLeft = 0;
+let calendarPreserveStripPosition = false;
 
 function loadState(){
   try {
@@ -335,7 +357,41 @@ function isOverdue(m){ return !hasResult(m) && new Date() > getEndDate(m); }
 function overdueMatches(){ return MATCHES.filter(isOverdue); }
 function statusLabel(m){ if(hasResult(m)) return ['Jugado','green']; if(isOverdue(m)) return ['Falta resultado','red']; return ['Pendiente','blue']; }
 function openTeam(team){ localStorage.setItem('selectedTeam', team); showTab('team'); }
-function resetMatch(id){ if(confirm('¿Borrar el marcador y nota de este partido?')){ delete state[String(id)]; saveState(); renderAll(); } }
+function resultReadyToLock(m){
+  if(!m) return false;
+  const r = res(m.id);
+  const g1 = valNum(r.g1), g2 = valNum(r.g2);
+  if(g1===null || g2===null) return false;
+  if(isGroup(m) || g1!==g2) return true;
+  return valNum(r.p1)!==null && valNum(r.p2)!==null;
+}
+function editMatchResult(id){
+  EDITING_MATCHES.add(Number(id));
+  updateMatchList();
+  setTimeout(() => {
+    const card = document.getElementById('match-' + id);
+    const input = card && card.querySelector('input[data-field="g1"]');
+    if(input) input.focus({preventScroll:true});
+  }, 60);
+}
+function saveAndLockMatch(id){
+  const m = matchById(id);
+  if(!resultReadyToLock(m)){
+    alert(isGroup(m) ? 'Captura los goles de ambos equipos antes de bloquear.' : 'Captura el resultado completo. Si empataron, agrega también los penales.');
+    return;
+  }
+  EDITING_MATCHES.delete(Number(id));
+  saveState();
+  renderAll();
+}
+function resetMatch(id){
+  if(confirm('¿Borrar el marcador y nota de este partido?')){
+    EDITING_MATCHES.delete(Number(id));
+    delete state[String(id)];
+    saveState();
+    renderAll();
+  }
+}
 const VIX_LIVE_START_MINUTES = 90;
 const VIX_LIVE_END_MINUTES = 150;
 function vixLiveLink(id){ return VIX_LINKS[String(id)] || ''; }
@@ -367,7 +423,7 @@ function openVixMatch(ev, id, kind){
 }
 function searchResultForMatch(ev, id){
   if(ev) ev.stopPropagation();
-  const m = matchById(id); if(!m) return;
+  const m = matchById(id); if(!m || !hasStarted(m)) return;
   const [t1,t2] = getMatchTeams(m, new Set());
   const query = `${t1} vs ${t2} Mundial 2026 resultado`;
   window.open('https://www.google.com/search?q=' + encodeURIComponent(query), '_blank', 'noopener');
@@ -734,27 +790,30 @@ function renderMatches(){
   updateMatchList();
 }
 function matchCard(m){
-  const r=res(m.id); const allocationSet = new Set(); const [t1,t2]=getMatchTeams(m, allocationSet); const w=getWinner(m.id);
-  const editable = !isGroup(m); const [st, stColor]=statusLabel(m);
+  const r=res(m.id); const allocationSet=new Set(); const [t1,t2]=getMatchTeams(m,allocationSet); const w=getWinner(m.id);
+  const editableTeams=!isGroup(m); const [st,stColor]=statusLabel(m);
+  const locked=resultReadyToLock(m) && !EDITING_MATCHES.has(Number(m.id));
+  const p1=valNum(r.p1), p2=valNum(r.p2);
+  const resultArea = locked ? `
+    <div class="locked-result">
+      <div class="locked-team"><div class="locked-team-name ${w===t1?'winner':''}"><span class="team-click" onclick="openTeam('${jsStr(t1)}')">${escapeHtml(t1)}</span></div><div><div class="locked-score">${escapeHtml(r.g1)}</div>${p1!==null?`<div class="locked-penalties">${p1} pen.</div>`:''}</div></div>
+      <div class="locked-team"><div class="locked-team-name ${w===t2?'winner':''}"><span class="team-click" onclick="openTeam('${jsStr(t2)}')">${escapeHtml(t2)}</span></div><div><div class="locked-score">${escapeHtml(r.g2)}</div>${p2!==null?`<div class="locked-penalties">${p2} pen.</div>`:''}</div></div>
+    </div><div class="result-locked-note">🔒 Resultado bloqueado para evitar cambios accidentales. Puedes editarlo desde Opciones.</div>` : `
+    ${editableTeams?`<input class="team-edit" data-id="${m.id}" data-field="team1Override" value="${escapeHtml(r.team1Override||'')}" placeholder="${escapeHtml(t1)}">`:''}
+    <div class="team-row"><div class="team-name ${w===t1?'winner':''}"><span class="team-click" onclick="openTeam('${jsStr(t1)}')">${escapeHtml(t1)}</span></div><input class="score" type="number" min="0" max="99" data-id="${m.id}" data-field="g1" value="${escapeHtml(r.g1??'')}" placeholder="G"><input class="score" type="number" min="0" max="99" data-id="${m.id}" data-field="p1" value="${escapeHtml(r.p1??'')}" placeholder="P"></div>
+    ${editableTeams?`<input class="team-edit" data-id="${m.id}" data-field="team2Override" value="${escapeHtml(r.team2Override||'')}" placeholder="${escapeHtml(t2)}">`:''}
+    <div class="team-row"><div class="team-name ${w===t2?'winner':''}"><span class="team-click" onclick="openTeam('${jsStr(t2)}')">${escapeHtml(t2)}</span></div><input class="score" type="number" min="0" max="99" data-id="${m.id}" data-field="g2" value="${escapeHtml(r.g2??'')}" placeholder="G"><input class="score" type="number" min="0" max="99" data-id="${m.id}" data-field="p2" value="${escapeHtml(r.p2??'')}" placeholder="P"></div>
+    <div class="row"><span class="score-label">G = goles · P = penales, solo eliminatoria</span>${w&&w!=='Empate'?`<span class="pill green">Gana: ${escapeHtml(w)}</span>`:w==='Empate'?'<span class="pill yellow">Empate</span>':'<span class="pill">Pendiente</span>'}</div>`;
   return `<div class="match-card status-${stColor==='red'?'overdue':stColor==='green'?'played':'pending'}" id="match-${m.id}">
-    <div class="match-head"><span>M${m.id} · ${escapeHtml(m.fase)} ${m.grupo? '· Grupo '+m.grupo : ''}</span><span class="pill ${stColor}">${escapeHtml(st)}</span></div>
+    <div class="match-head"><span>M${m.id} · ${escapeHtml(m.fase)} ${m.grupo?'· Grupo '+m.grupo:''}</span><span class="pill ${stColor}">${escapeHtml(st)}</span></div>
     <div class="match-head" style="margin-top:6px"><span>${formatDate(m.fecha)} · ${m.hora}</span><span>${escapeHtml(m.sede)}</span></div>
-    <div class="teams">
-      ${editable ? `<input class="team-edit" data-id="${m.id}" data-field="team1Override" value="${escapeHtml(r.team1Override || '')}" placeholder="${escapeHtml(t1)}">` : ''}
-      <div class="team-row"><div class="team-name ${w===t1?'winner':''}"><span class="team-click" onclick="openTeam('${jsStr(t1)}')">${escapeHtml(t1)}</span></div><input class="score" type="number" min="0" max="99" data-id="${m.id}" data-field="g1" value="${escapeHtml(r.g1 ?? '')}" placeholder="G"><input class="score" type="number" min="0" max="99" data-id="${m.id}" data-field="p1" value="${escapeHtml(r.p1 ?? '')}" placeholder="P"></div>
-      ${editable ? `<input class="team-edit" data-id="${m.id}" data-field="team2Override" value="${escapeHtml(r.team2Override || '')}" placeholder="${escapeHtml(t2)}">` : ''}
-      <div class="team-row"><div class="team-name ${w===t2?'winner':''}"><span class="team-click" onclick="openTeam('${jsStr(t2)}')">${escapeHtml(t2)}</span></div><input class="score" type="number" min="0" max="99" data-id="${m.id}" data-field="g2" value="${escapeHtml(r.g2 ?? '')}" placeholder="G"><input class="score" type="number" min="0" max="99" data-id="${m.id}" data-field="p2" value="${escapeHtml(r.p2 ?? '')}" placeholder="P"></div>
-      <div class="row"><span class="score-label">G = goles · P = penales, solo eliminatoria</span>${w && w !== 'Empate' ? `<span class="pill green">Gana: ${escapeHtml(w)}</span>` : w==='Empate' ? '<span class="pill yellow">Empate</span>' : '<span class="pill">Pendiente</span>'}</div>
-    </div>
-    <details class="compact-actions">
-      <summary>⋯ Opciones</summary>
-      <div class="action-row">
-        ${vixButton(m.id)}
-        ${resultButton(m.id)}
-        <button class="secondary" onclick="jumpToMatch(${m.id})">🎯 Enfocar captura</button>
-        <button class="ghost" onclick="resetMatch(${m.id})">↩️ Borrar este partido</button>
-      </div>
-    </details>
+    <div class="teams">${resultArea}</div>
+    <details class="compact-actions"><summary>⋯ Opciones</summary><div class="action-row">
+      ${vixButton(m.id)}${resultButton(m.id)}
+      ${locked?`<button class="secondary" onclick="editMatchResult(${m.id})">✏️ Editar resultado</button>`:resultReadyToLock(m)?`<button class="secondary" onclick="saveAndLockMatch(${m.id})">🔒 Guardar y bloquear</button>`:''}
+      ${!locked?`<button class="secondary" onclick="jumpToMatch(${m.id})">🎯 Enfocar captura</button>`:''}
+      <button class="ghost" onclick="resetMatch(${m.id})">↩️ Borrar este partido</button>
+    </div></details>
   </div>`;
 }
 
@@ -767,17 +826,32 @@ function calendarDefaultDate(){
   const today = localDateKey(new Date());
   return dates.find(d=>d>=today) || dates[dates.length-1] || today;
 }
-function setCalendarDate(date){ localStorage.setItem('calendarDate', date); renderCalendar(); }
+function setCalendarDate(date, preserveStripPosition=false){
+  const currentStrip = document.querySelector('#calendar .day-strip');
+  if(currentStrip) calendarStripScrollLeft = currentStrip.scrollLeft;
+  calendarPreserveStripPosition = preserveStripPosition;
+  localStorage.setItem('calendarDate', date);
+  renderCalendar();
+}
+
+function changeCalendarDay(step){
+  const dates = Array.from(new Set(MATCHES.map(m=>m.fecha))).sort();
+  const current = localStorage.getItem('calendarDate') || calendarDefaultDate();
+  const index = dates.indexOf(current);
+  const nextIndex = Math.max(0, Math.min(dates.length - 1, index + step));
+  setCalendarDate(dates[nextIndex], false);
+}
+
 function setCalendarToToday(){
   const today = localDateKey(new Date());
   const dates = Array.from(new Set(MATCHES.map(m=>m.fecha))).sort();
-  setCalendarDate(dates.includes(today) ? today : calendarDefaultDate());
+  setCalendarDate(dates.includes(today) ? today : calendarDefaultDate(), false);
 }
 function setCalendarToTomorrow(){
   const t = new Date(); t.setDate(t.getDate()+1);
   const key = localDateKey(t);
   const dates = Array.from(new Set(MATCHES.map(m=>m.fecha))).sort();
-  setCalendarDate(dates.includes(key) ? key : calendarDefaultDate());
+  setCalendarDate(dates.includes(key) ? key : calendarDefaultDate(), false);
 }
 
 function timeInfoForMatch(m){
@@ -806,6 +880,16 @@ function dayChipLabel(dateStr){
   const date = d.toLocaleDateString('es-MX',{day:'numeric', month:'short'}).replace('.','');
   return {dow, date};
 }
+
+function restoreCalendarStripPosition(){
+  const strip=document.querySelector('#calendar .day-strip');
+  if(!strip) return;
+  const active=strip.querySelector('.day-chip.active');
+  if(calendarPreserveStripPosition){ strip.scrollLeft=calendarStripScrollLeft; }
+  else if(active){ strip.scrollLeft=Math.max(0, active.offsetLeft-((strip.clientWidth-active.offsetWidth)/2)); }
+  calendarPreserveStripPosition=false;
+}
+
 function renderCalendar(){
   const view = document.getElementById('calendar');
   if(!view) return;
@@ -826,7 +910,7 @@ function renderCalendar(){
   const dayStrip = dates.map(d => {
     const info = dayChipLabel(d);
     const count = MATCHES.filter(m=>m.fecha===d).length;
-    return `<button class="day-chip ${d===selected?'active':''} ${d===today?'today':''}" onclick="setCalendarDate('${d}')">
+    return `<button class="day-chip ${d===selected?'active':''} ${d===today?'today':''}" onclick="setCalendarDate('${d}', true)">
       <div class="dow">${escapeHtml(info.dow)}${d===today?' · Hoy':''}</div>
       <div class="date">${escapeHtml(info.date)}</div>
       <div class="count">${count} partido${count===1?'':'s'}</div>
@@ -842,14 +926,14 @@ function renderCalendar(){
         <div class="calendar-date-mini">M${m.id}</div>
       </div>
       <div>
-        <div class="calendar-teams">${escapeHtml(t1)} vs ${escapeHtml(t2)}</div>
+        <div class="calendar-teams">${hasResult(m)?`${escapeHtml(t1)} <span class="calendar-score-badge">${escapeHtml(r.g1)} - ${escapeHtml(r.g2)}</span> ${escapeHtml(t2)}${valNum(r.p1)!==null&&valNum(r.p2)!==null?` <span class="small">(${r.p1}-${r.p2} pen.)</span>`:''}`:`${escapeHtml(t1)} vs ${escapeHtml(t2)}`}</div>
         <div class="calendar-meta">${escapeHtml(m.fase)}${m.grupo?` · Grupo ${escapeHtml(m.grupo)}`:''} · ${escapeHtml(m.sede)}</div>
         ${ti.rel ? `<div class="calendar-relative">${escapeHtml(ti.rel)}</div>` : ''}
         ${ti.cls==='en-vivo' && !hasResult(m) ? `<span class="calendar-now">${escapeHtml(ti.label)}</span>` : ''}
       </div>
       <div class="calendar-actions" onclick="event.stopPropagation()">
         <span class="pill ${color}">${label}</span>
-        <button class="secondary" onclick="jumpToMatch(${m.id})">🎯 Capturar</button>
+        <button class="secondary" onclick="jumpToMatch(${m.id})">${hasResult(m)?'📋 Ver resultado':'🎯 Capturar'}</button>
         ${vixButton(m.id)}
         ${resultButton(m.id)}
       </div>
@@ -867,8 +951,10 @@ function renderCalendar(){
       <div class="day-strip">${dayStrip}</div>
       <div class="calendar-toolbar">
         <select id="calendarDateSelect">${dates.map(d=>`<option value="${d}" ${d===selected?'selected':''}>${formatDate(d)}${d===today?' · Hoy':''}</option>`).join('')}</select>
+        <button class="secondary" onclick="changeCalendarDay(-1)">◀ Día anterior</button>
         <button class="secondary" onclick="setCalendarToToday()">Hoy</button>
         <button class="secondary" onclick="setCalendarToTomorrow()">Mañana</button>
+        <button class="secondary" onclick="changeCalendarDay(1)">Día siguiente ▶</button>
         <button class="secondary" onclick="localStorage.setItem('filterSearch','');localStorage.setItem('filterFase','Todos');localStorage.setItem('filterGrupo','Todos');localStorage.setItem('statusFilter','Vencidos');showTab('matches')">⚠️ Vencidos</button>
       </div>
     </div>
@@ -892,7 +978,8 @@ function renderCalendar(){
       section('Jugados','✅', played)
     ].join('') : '<div class="card calendar-empty">No hay partidos este día.</div>'}`;
   const sel = document.getElementById('calendarDateSelect');
-  if(sel) sel.onchange = e => setCalendarDate(e.target.value);
+  if(sel) sel.onchange = e => setCalendarDate(e.target.value, false);
+  restoreCalendarStripPosition();
 }
 
 function renderGroups(){
@@ -950,7 +1037,7 @@ function renderHelp(){
 function renderAll(){ renderHome(); if(document.getElementById('matches').classList.contains('active')) renderMatches(); if(document.getElementById('calendar').classList.contains('active')) renderCalendar(); renderGroups(); renderThirds(); renderBracket(); renderTeam(); renderHelp(); }
 
 function exportProgress(){
-  const blob = new Blob([JSON.stringify({app:'Mundial 2026 Control Monterrey', version:11, exportedAt:new Date().toISOString(), state}, null, 2)], {type:'application/json'});
+  const blob = new Blob([JSON.stringify({app:'Mundial 2026 Control Monterrey', version:13, exportedAt:new Date().toISOString(), state}, null, 2)], {type:'application/json'});
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'mundial_2026_progreso.json'; a.click(); URL.revokeObjectURL(a.href);
 }
 function importProgress(file){

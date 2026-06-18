@@ -1,6 +1,6 @@
 {
-  "version": 3,
-  "updated_at": "2026-06-17 08:35",
+  "version": 4,
+  "updated_at": "2026-06-17 21:17",
   "instructions": "Edita live para el enlace en vivo y summary para el resumen. Conserva el número de partido como llave. La app lee este archivo desde GitHub Pages.",
   "live_window_minutes": {
     "before": 90,
@@ -120,7 +120,7 @@
     "23": {
       "match": "Portugal vs RD Congo",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608261",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4908791"
     },
     "24": {
       "match": "Uzbekistán vs Colombia",

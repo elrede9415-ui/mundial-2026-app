@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mundial-2026-control-v11-preview';
+const CACHE_NAME = 'mundial-2026-control-v13';
 const ASSETS = ['./', './index.html', './manifest.webmanifest', './vix_links.json', './icons/icon-192.png', './icons/icon-512.png'];
 self.addEventListener('install', event => {
   self.skipWaiting();
