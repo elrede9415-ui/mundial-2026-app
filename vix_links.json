@@ -1,6 +1,6 @@
 {
-  "version": 6,
-  "updated_at": "2026-06-18 03:45",
+  "version": 7,
+  "updated_at": "2026-06-18 07:06",
   "instructions": "Edita live para el enlace en vivo y summary para el resumen. Conserva el número de partido como llave. La app lee este archivo desde GitHub Pages.",
   "live_window_minutes": {
     "before": 90,
@@ -125,7 +125,7 @@
     "24": {
       "match": "Uzbekistán vs Colombia",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608262",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4909380"
     },
     "25": {
       "match": "Chequia vs Sudáfrica",
