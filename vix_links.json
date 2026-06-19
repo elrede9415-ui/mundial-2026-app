@@ -1,6 +1,6 @@
 {
-  "version": 7,
-  "updated_at": "2026-06-18 07:06",
+  "version": 8,
+  "updated_at": "2026-06-19 05:50",
   "instructions": "Edita live para el enlace en vivo y summary para el resumen. Conserva el número de partido como llave. La app lee este archivo desde GitHub Pages.",
   "live_window_minutes": {
     "before": 90,
@@ -130,22 +130,22 @@
     "25": {
       "match": "Chequia vs Sudáfrica",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608266",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4909668"
     },
     "26": {
       "match": "Suiza vs Bosnia y Herzegovina",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608268",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4909851"
     },
     "27": {
       "match": "Canadá vs Catar",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608267",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4910105"
     },
     "28": {
       "match": "México vs Corea del Sur",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608265",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4910251"
     },
     "29": {
       "match": "Brasil vs Haití",
