@@ -1,6 +1,6 @@
 {
-  "version": 8,
-  "updated_at": "2026-06-19 05:50",
+  "version": 9,
+  "updated_at": "2026-06-20 07:17",
   "instructions": "Edita live para el enlace en vivo y summary para el resumen. Conserva el número de partido como llave. La app lee este archivo desde GitHub Pages.",
   "live_window_minutes": {
     "before": 90,
@@ -150,22 +150,22 @@
     "29": {
       "match": "Brasil vs Haití",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608269",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4911043"
     },
     "30": {
       "match": "Escocia vs Marruecos",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608270",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4910893"
     },
     "31": {
       "match": "Estados Unidos vs Australia",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608271",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4910760"
     },
     "32": {
       "match": "Turquía vs Paraguay",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608272",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4911149"
     },
     "33": {
       "match": "Alemania vs Costa de Marfil",
