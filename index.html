@@ -30,9 +30,7 @@ input,select{background:var(--input); color:var(--text); border:1px solid var(--
 .group-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:12px}.group-card{background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow)}.group-title{background:linear-gradient(135deg,#0f4c81,#1681c4); padding:11px 13px; font-weight:900}.table-wrap{overflow-x:auto}table{width:100%; border-collapse:collapse; font-size:13px}th,td{padding:8px 7px; border-bottom:1px solid var(--line); text-align:center}th{color:#dceaff; background:#0d1a2f; font-size:11px}td.team{text-align:left; font-weight:800}.rank1,.rank2{background:rgba(25,166,90,.12)}.rank3{background:rgba(255,193,7,.13)}.rank4{background:rgba(232,80,91,.10)}
 .third-table td,.third-table th{padding:9px}.qualified{color:#8ff0b7; font-weight:900}.not-qualified{color:#ff9ea7; font-weight:900}
 /* v16 prueba: eliminación matemática por escenarios, solo mediante colores */
-.table-zone{background:rgba(25,166,90,.14)}
-.table-risk{background:rgba(255,193,7,.15)}
-.table-eliminated{background:rgba(232,80,91,.13);opacity:.78}
+
 .table-neutral{background:transparent}
 .top-info-symbol{font-size:22px;line-height:1;color:#fff;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
 body.light .top-info-symbol{color:#132238}
@@ -210,6 +208,36 @@ body.hide-flags .flag-emoji{display:none}.versus{color:var(--muted);font-weight:
 .clean-help{display:grid;gap:10px}.clean-help .card h2{font-size:16px;margin:0 0 8px}.clean-help .card p{margin:6px 0;color:var(--muted)}
 body.light .info-trigger{background:#fff;border-color:#cbd8e8}body.light .info-trigger img{filter:none}body.light .mini-info{background:#fff;color:#132238;border-color:#cbd8e8}body.light .info-modal{background:#fff;color:#132238;border-color:#cbd8e8}
 @media(max-width:520px){.brand-copy h1{font-size:18px}.brand-copy .subtitle{max-width:210px}.info-trigger{width:36px;height:36px}.menu-trigger{width:40px;height:40px}.flag-emoji{width:20px;font-size:18px}}
+
+
+/* v16b: colores más visibles para estados en tablas, compatibles con tema claro y oscuro */
+.table-zone{
+  background: rgba(34, 197, 94, 0.22) !important;
+  box-shadow: inset 4px 0 0 rgba(34, 197, 94, 0.95);
+}
+.table-risk{
+  background: rgba(245, 158, 11, 0.24) !important;
+  box-shadow: inset 4px 0 0 rgba(245, 158, 11, 0.95);
+}
+.table-eliminated{
+  background: rgba(239, 68, 68, 0.24) !important;
+  box-shadow: inset 4px 0 0 rgba(239, 68, 68, 0.95);
+}
+.table-zone td, .table-risk td, .table-eliminated td{
+  font-weight: 700;
+}
+body.light .table-zone{
+  background: rgba(34, 197, 94, 0.18) !important;
+  box-shadow: inset 4px 0 0 rgba(21, 128, 61, 0.95);
+}
+body.light .table-risk{
+  background: rgba(245, 158, 11, 0.20) !important;
+  box-shadow: inset 4px 0 0 rgba(180, 83, 9, 0.95);
+}
+body.light .table-eliminated{
+  background: rgba(239, 68, 68, 0.18) !important;
+  box-shadow: inset 4px 0 0 rgba(185, 28, 28, 0.95);
+}
 
 </style>
 </head>
@@ -664,7 +692,7 @@ function initTheme(){
 
 
 const UI_PREFS_KEY = 'mundial2026UiPrefs_v14';
-const APP_VERSION = 'v16-prueba-eliminados';
+const APP_VERSION = 'v16-prueba-eliminados-colores';
 let VIX_JSON_VERSION = 7;
 let VIX_JSON_UPDATED_AT = "2026-06-18 07:06";
 let toastTimer = null;
