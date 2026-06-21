@@ -1,18 +1,22 @@
-Mundial 2026 · Control — v14
+Mundial 2026 · Control v15
 
-Novedades:
-- Menú lateral derecho para funciones secundarias.
-- Barra inferior limpia con Inicio, Partidos, Calendario, Grupos y Llave.
-- Banderas pequeñas junto a las selecciones; pueden ocultarse en Configuración.
-- Nombre general: Mundial 2026 · Control.
-- Información extensa movida a botones ⓘ para mantener la pantalla ordenada.
-- Actualización manual de enlaces ViX y búsqueda de actualización general como respaldo.
-- Incluye los resúmenes ViX disponibles hasta Uzbekistán vs Colombia del 17 de junio.
+Cambios principales:
+- Tablas de grupos con estado mostrado únicamente mediante colores.
+- Verde: clasificado o en zona de clasificación.
+- Naranja: tercer lugar o en riesgo.
+- Rojo: eliminado matemáticamente.
+- La explicación completa está dentro del botón de información (i).
+- Mejores terceros sin columna de texto de estado; solo colores.
+- El símbolo de información superior ahora es igual al de las demás secciones.
+- vix_links.json actualizado con los resúmenes del 20 de junio:
+  Países Bajos vs Suecia, Alemania vs Costa de Marfil,
+  Ecuador vs Curazao y Túnez vs Japón.
 
-Para actualizar GitHub Pages:
-1. Descomprime este ZIP.
-2. Sube o reemplaza todos los archivos y carpetas que están dentro de mundial2026_app_v14_final.
-3. Haz Commit changes.
-4. Espera unos minutos y abre la app con internet.
+Para actualizar GitHub:
+1. Descomprime el ZIP.
+2. Entra a la carpeta mundial2026_app_v15_final.
+3. Sube y reemplaza todos los archivos y carpetas en la raíz del repositorio.
+4. Haz Commit changes.
+5. Espera unos minutos y abre la app con internet.
 
-Después, para agregar únicamente enlaces ViX, reemplaza solo vix_links.json.
+Los marcadores y preferencias guardados en el teléfono se conservan.

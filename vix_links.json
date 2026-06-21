@@ -1,6 +1,6 @@
 {
-  "version": 9,
-  "updated_at": "2026-06-20 07:17",
+  "version": 10,
+  "updated_at": "2026-06-21 18:02",
   "instructions": "Edita live para el enlace en vivo y summary para el resumen. Conserva el número de partido como llave. La app lee este archivo desde GitHub Pages.",
   "live_window_minutes": {
     "before": 90,
@@ -170,22 +170,22 @@
     "33": {
       "match": "Alemania vs Costa de Marfil",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608273",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4911343"
     },
     "34": {
       "match": "Ecuador vs Curazao",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608274",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4911417"
     },
     "35": {
       "match": "Países Bajos vs Suecia",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608275",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4911280"
     },
     "36": {
       "match": "Túnez vs Japón",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608276",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4911514"
     },
     "37": {
       "match": "Uruguay vs Cabo Verde",
