@@ -29,7 +29,7 @@ button,.btn{border:0; background:var(--primary2); color:white; border-radius:12p
 input,select{background:var(--input); color:var(--text); border:1px solid var(--line); border-radius:10px; padding:9px; outline:none}input:focus,select:focus{border-color:var(--primary2); box-shadow:0 0 0 3px rgba(22,129,196,.16)}.score{width:58px; text-align:center; font-weight:900}.team-edit{width:100%; margin-top:6px}.filters{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px}.filters input{grid-column:1 / -1}.match-list{display:grid; gap:12px}.match-card{background:var(--card); border:1px solid var(--line); border-radius:16px; padding:13px; box-shadow:var(--shadow)}.match-head{display:flex; justify-content:space-between; gap:8px; align-items:flex-start; color:var(--muted); font-size:12px}.teams{display:grid; gap:9px; margin:10px 0}.team-row{display:grid; grid-template-columns:minmax(0,1fr) 58px 58px; gap:7px; align-items:center}.team-name{font-weight:900; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}.team-name.winner{color:#8ff0b7}.score-label{font-size:10px; color:var(--muted); text-align:center}.venue{font-size:12px; color:var(--muted); margin-top:6px}.small{font-size:12px; color:var(--muted)}
 .group-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:12px}.group-card{background:var(--card); border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow)}.group-title{background:linear-gradient(135deg,#0f4c81,#1681c4); padding:11px 13px; font-weight:900}.table-wrap{overflow-x:auto}table{width:100%; border-collapse:collapse; font-size:13px}th,td{padding:8px 7px; border-bottom:1px solid var(--line); text-align:center}th{color:#dceaff; background:#0d1a2f; font-size:11px}td.team{text-align:left; font-weight:800}.rank1,.rank2{background:rgba(25,166,90,.12)}.rank3{background:rgba(255,193,7,.13)}.rank4{background:rgba(232,80,91,.10)}
 .third-table td,.third-table th{padding:9px}.qualified{color:#8ff0b7; font-weight:900}.not-qualified{color:#ff9ea7; font-weight:900}
-/* v15: estado de selecciones solo por color */
+/* v16 prueba: eliminación matemática por escenarios, solo mediante colores */
 .table-zone{background:rgba(25,166,90,.14)}
 .table-risk{background:rgba(255,193,7,.15)}
 .table-eliminated{background:rgba(232,80,91,.13);opacity:.78}
@@ -664,7 +664,7 @@ function initTheme(){
 
 
 const UI_PREFS_KEY = 'mundial2026UiPrefs_v14';
-const APP_VERSION = 'v15';
+const APP_VERSION = 'v16-prueba-eliminados';
 let VIX_JSON_VERSION = 7;
 let VIX_JSON_UPDATED_AT = "2026-06-18 07:06";
 let toastTimer = null;
@@ -742,8 +742,8 @@ function openInfoModal(title, html){
 function closeInfoModal(){ const modal=document.getElementById('infoModalBackdrop'); if(!modal) return; modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); }
 function showAppInfo(){ openInfoModal('Mundial 2026 · Control', `<p>Control personal de los 104 partidos, marcadores, grupos, favoritos y llave.</p><ul><li>Los horarios están configurados para Monterrey, Nuevo León.</li><li>Los datos y marcadores se guardan en este dispositivo.</li><li>Los enlaces ViX se actualizan automáticamente al abrir; los botones manuales son de respaldo.</li></ul><p class="muted">Versión instalada: ${APP_VERSION}</p>`); }
 function showCalendarInfo(){ openInfoModal('Calendario', '<p>Desliza la fila de días y toca un partido para abrir su captura. Los marcadores guardados aparecen directamente en el calendario.</p>'); }
-function showGroupsInfo(){ openInfoModal('Colores de las tablas', '<p><strong>Verde:</strong> clasificado o actualmente en zona de clasificación.</p><p><strong>Naranja:</strong> tercer lugar o selección en riesgo; su situación todavía puede cambiar.</p><p><strong>Rojo:</strong> eliminado matemáticamente.</p><p><strong>Sin color:</strong> aún conserva posibilidades y no tiene una situación definida.</p><p class="muted">Los colores se calculan con los resultados capturados y pueden cambiar mientras haya partidos pendientes.</p>'); }
-function showThirdsInfo(){ openInfoModal('Mejores terceros', '<p>Clasifican los ocho mejores terceros.</p><p><strong>Verde:</strong> en zona de clasificación.</p><p><strong>Naranja:</strong> fuera por ahora, pero todavía puede cambiar.</p><p><strong>Rojo:</strong> eliminado cuando finaliza toda la fase de grupos.</p><p class="muted">El orden usa puntos, diferencia de goles y goles a favor.</p>'); }
+function showGroupsInfo(){ openInfoModal('Colores de las tablas', '<p><strong>Verde:</strong> clasificado o actualmente en zona de clasificación.</p><p><strong>Naranja:</strong> tercer lugar o selección en riesgo; su situación todavía puede cambiar.</p><p><strong>Rojo:</strong> ya no existe ninguna combinación de victorias, empates y derrotas pendientes que le permita terminar entre los tres primeros de su grupo.</p><p><strong>Sin color:</strong> aún conserva posibilidades y no tiene una situación definida.</p><p class="muted">La app prueba todos los resultados posibles de los partidos pendientes y usa primero los puntos obtenidos entre los equipos empatados. Cuando una situación todavía podría depender de marcadores, tarjetas o ranking FIFA, evita pintar rojo antes de tiempo.</p>'); }
+function showThirdsInfo(){ openInfoModal('Mejores terceros', '<p>Clasifican los ocho mejores terceros.</p><p><strong>Verde:</strong> en zona de clasificación.</p><p><strong>Naranja:</strong> fuera por ahora, pero todavía puede cambiar.</p><p><strong>Rojo:</strong> eliminado cuando ya no puede terminar tercero en su grupo o, al finalizar todos los grupos, queda fuera de los ocho mejores terceros.</p><p class="muted">El orden de terceros usa puntos, diferencia de goles y goles a favor. Los casos que dependan de conducta o ranking se mantienen de forma conservadora.</p>'); }
 function showBracketInfo(){ openInfoModal('Llave', '<p>La llave se completa con los resultados. Los cruces de mejores terceros pueden editarse manualmente en Partidos cuando se confirme la combinación oficial.</p>'); }
 
 async function updateVixLinksNow(){
@@ -1172,12 +1172,139 @@ function renderCalendar(){
 }
 
 function allGroupsComplete(){ return GROUPS.every(g => groupPlayedCount(g) >= 6); }
+
+/*
+  Eliminación matemática conservadora:
+  - prueba las 3 posibilidades de cada partido pendiente: gana local, empate o gana visitante;
+  - calcula los puntos finales posibles;
+  - cuando hay empate en puntos, usa los puntos obtenidos entre los equipos empatados;
+  - si todavía podría decidirse por diferencia de goles, goles, tarjetas o ranking,
+    concede la posibilidad al equipo para evitar marcarlo rojo incorrectamente.
+*/
+const GROUP_ELIMINATION_CACHE = {};
+
+function groupScenarioSignature(g){
+  return MATCHES.filter(m => isGroup(m) && m.grupo === g)
+    .map(m => {
+      const r = res(m.id);
+      const g1 = valNum(r.g1), g2 = valNum(r.g2);
+      return `${m.id}:${g1===null?'':g1}-${g2===null?'':g2}`;
+    }).join('|');
+}
+
+function getGroupEliminationMap(g){
+  const signature = groupScenarioSignature(g);
+  const cached = GROUP_ELIMINATION_CACHE[g];
+  if(cached && cached.signature === signature) return cached.map;
+
+  const matches = MATCHES.filter(m => isGroup(m) && m.grupo === g);
+  const teams = Array.from(new Set(matches.flatMap(m => [m.team1,m.team2])));
+  const points = Object.fromEntries(teams.map(t => [t,0]));
+  const headToHead = Object.fromEntries(
+    teams.map(t => [t,Object.fromEntries(teams.map(o => [o,0]))])
+  );
+  const pending = [];
+
+  function addResult(team1, team2, outcome, factor){
+    if(outcome === 0){
+      points[team1] += 3 * factor;
+      headToHead[team1][team2] += 3 * factor;
+    } else if(outcome === 2){
+      points[team2] += 3 * factor;
+      headToHead[team2][team1] += 3 * factor;
+    } else {
+      points[team1] += 1 * factor;
+      points[team2] += 1 * factor;
+      headToHead[team1][team2] += 1 * factor;
+      headToHead[team2][team1] += 1 * factor;
+    }
+  }
+
+  matches.forEach(m => {
+    const r = res(m.id);
+    const g1 = valNum(r.g1), g2 = valNum(r.g2);
+    if(g1 === null || g2 === null){
+      pending.push(m);
+      return;
+    }
+    addResult(m.team1, m.team2, g1 > g2 ? 0 : (g2 > g1 ? 2 : 1), 1);
+  });
+
+  const canFinishTopThree = Object.fromEntries(teams.map(t => [t,false]));
+
+  function scenarioAllowsTopThree(team){
+    const teamPoints = points[team];
+    const teamsAbove = teams.filter(other => other !== team && points[other] > teamPoints).length;
+    if(teamsAbove >= 3) return false;
+
+    const availablePlaces = 3 - teamsAbove;
+    const tiedTeams = teams.filter(other => points[other] === teamPoints);
+    if(tiedTeams.length <= availablePlaces) return true;
+
+    const miniPoints = {};
+    tiedTeams.forEach(t => {
+      miniPoints[t] = tiedTeams.reduce((sum,other) => {
+        if(other === t) return sum;
+        return sum + (headToHead[t][other] || 0);
+      },0);
+    });
+
+    const tiedTeamsAbove = tiedTeams.filter(
+      other => other !== team && miniPoints[other] > miniPoints[team]
+    ).length;
+
+    if(tiedTeamsAbove >= availablePlaces) return false;
+
+    // Si los puntos de enfrentamientos directos no bastan para eliminarlo,
+    // se considera que todavía podría salvarse mediante los siguientes desempates.
+    return true;
+  }
+
+  function evaluateScenario(){
+    teams.forEach(team => {
+      if(!canFinishTopThree[team] && scenarioAllowsTopThree(team)){
+        canFinishTopThree[team] = true;
+      }
+    });
+  }
+
+  function explore(index){
+    if(Object.values(canFinishTopThree).every(Boolean)) return;
+    if(index >= pending.length){
+      evaluateScenario();
+      return;
+    }
+
+    const m = pending[index];
+    for(let outcome=0; outcome<3; outcome++){
+      addResult(m.team1, m.team2, outcome, 1);
+      explore(index + 1);
+      addResult(m.team1, m.team2, outcome, -1);
+    }
+  }
+
+  explore(0);
+
+  const eliminated = Object.fromEntries(
+    teams.map(team => [team,!canFinishTopThree[team]])
+  );
+
+  GROUP_ELIMINATION_CACHE[g] = {signature, map:eliminated};
+  return eliminated;
+}
+
 function groupRowStatusClass(g, rows, index){
   const row = rows[index];
   if(!row) return 'table-neutral';
-  const groupComplete = groupPlayedCount(g) >= 6;
+
   const tournamentGroupsComplete = allGroupsComplete();
+  const groupComplete = groupPlayedCount(g) >= 6;
+  const eliminatedMap = getGroupEliminationMap(g);
+
+  if(eliminatedMap[row.team]) return 'table-eliminated';
+
   if(index < 2) return 'table-zone';
+
   if(index === 2){
     if(tournamentGroupsComplete){
       const thirdIndex = getThirds().findIndex(x => x.group === g && x.team === row.team);
@@ -1185,12 +1312,11 @@ function groupRowStatusClass(g, rows, index){
     }
     return 'table-risk';
   }
-  const remaining = Math.max(0, 3 - row.pj);
-  const maxPoints = row.pts + remaining * 3;
-  const thirdPoints = rows[2] ? rows[2].pts : 0;
-  if(groupComplete || maxPoints < thirdPoints) return 'table-eliminated';
+
+  if(groupComplete) return 'table-eliminated';
   return 'table-neutral';
 }
+
 function thirdRowStatusClass(index){
   if(allGroupsComplete()) return index < 8 ? 'table-zone' : 'table-eliminated';
   return index < 8 ? 'table-zone' : 'table-risk';
