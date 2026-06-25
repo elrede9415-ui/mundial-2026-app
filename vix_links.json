@@ -1,6 +1,6 @@
 {
-  "version": 11,
-  "updated_at": "2026-06-24 08:00",
+  "version": 12,
+  "updated_at": "2026-06-25 08:00",
   "instructions": "Edita live para el enlace en vivo y summary para el resumen. Conserva el número de partido como llave. La app lee este archivo desde GitHub Pages.",
   "live_window_minutes": {
     "before": 90,
@@ -250,32 +250,32 @@
     "49": {
       "match": "Escocia vs Brasil",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608293",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4914581"
     },
     "50": {
       "match": "Marruecos vs Haití",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608294",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4914647"
     },
     "51": {
       "match": "Suiza vs Canadá",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608291",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4914368"
     },
     "52": {
       "match": "Bosnia y Herzegovina vs Catar",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608292",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4914351"
     },
     "53": {
       "match": "Chequia vs México",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608289",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4914827"
     },
     "54": {
       "match": "Sudáfrica vs Corea del Sur",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608290",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4914831"
     },
     "55": {
       "match": "Curazao vs Costa de Marfil",
