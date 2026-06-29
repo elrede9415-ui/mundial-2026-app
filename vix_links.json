@@ -1,6 +1,6 @@
 {
-  "version": 13,
-  "updated_at": "2026-06-29 01:06",
+  "version": 14,
+  "updated_at": "2026-06-29 01:21",
   "instructions": "Edita live para el enlace en vivo y summary para el resumen. Conserva el número de partido como llave. La app lee este archivo desde GitHub Pages.",
   "live_window_minutes": {
     "before": 90,
@@ -280,97 +280,97 @@
     "55": {
       "match": "Curazao vs Costa de Marfil",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608298",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4915682"
     },
     "56": {
       "match": "Ecuador vs Alemania",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608297",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4915680"
     },
     "57": {
       "match": "Japón vs Suecia",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608300",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4915897"
     },
     "58": {
       "match": "Túnez vs Países Bajos",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608299",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4915895"
     },
     "59": {
       "match": "Turquía vs Estados Unidos",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608295",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4916079"
     },
     "60": {
       "match": "Paraguay vs Australia",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608296",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4916074"
     },
     "61": {
       "match": "Noruega vs Francia",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608305",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4916599"
     },
     "62": {
       "match": "Senegal vs Irak",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608306",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4916601"
     },
     "63": {
       "match": "Egipto vs Irán",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608302",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4917059"
     },
     "64": {
       "match": "Nueva Zelanda vs Bélgica",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608301",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4917056"
     },
     "65": {
       "match": "Cabo Verde vs Arabia Saudita",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608304",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4916927"
     },
     "66": {
       "match": "Uruguay vs España",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608303",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4916919"
     },
     "67": {
       "match": "Panamá vs Inglaterra",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608311",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4917268"
     },
     "68": {
       "match": "Croacia vs Ghana",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608312",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4917260"
     },
     "69": {
       "match": "Argelia vs Austria",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608308",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4917448"
     },
     "70": {
       "match": "Jordania vs Argentina",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608307",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4917454"
     },
     "71": {
       "match": "Colombia vs Portugal",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608309",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4917360"
     },
     "72": {
       "match": "RD Congo vs Uzbekistán",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608310",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4917353"
     },
     "73": {
-      "match": "2º Grupo A vs 2º Grupo B",
+      "match": "Sudáfrica vs Canadá",
       "live": "https://vix.com/es-es/live/transmission-matchid-2608313",
-      "summary": ""
+      "summary": "https://vix.com/es-es/video/video-4917661"
     },
     "74": {
       "match": "1º Grupo E vs 3º Grupo A/B/C/D/F",
